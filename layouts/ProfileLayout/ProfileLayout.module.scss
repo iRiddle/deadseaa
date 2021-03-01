@@ -1,0 +1,39 @@
+.profile-layout {
+    width: 100%;
+    background-color: #EAF6ED;
+
+    &__container {
+        padding: 56px 44px;
+    }
+
+    &__nav {
+        margin-top: 26px;
+    }
+
+    &__links {
+        display: flex;
+    }
+
+    &__link, &__exit {
+        margin-right: 42px;
+        padding: 0;
+        text-decoration: underline;
+        font-weight: bold;
+        font-size: 15px;
+        line-height: 20px;
+        transition: 0.4s;
+
+        &:last-child {
+            margin-right: 0;
+        }
+
+        &:hover {
+            transform: scale(1.1);
+            transition: 0.4s;
+        }
+    }
+
+    &__active {
+        color: #097F8A;
+    }
+}

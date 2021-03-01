@@ -1,0 +1,13 @@
+.breadcrumbs {
+    &__container {
+        display: flex;
+    }
+
+    &__link {
+        margin: 0 8px;
+
+        &:first-child {
+            margin-left: 0;
+        }
+    }
+}

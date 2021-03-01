@@ -1,0 +1,18 @@
+.main {
+    &__container {
+        display: flex;
+        flex-direction: column;
+        max-width: 1140px;
+        margin: 0 auto;
+        padding: 35px 0
+    }
+}
+
+.page-container {
+    position: relative;
+    min-height: calc(100vh - 240px);
+
+    &__content-wrap {
+        padding-bottom: 2.5rem;
+    }
+}

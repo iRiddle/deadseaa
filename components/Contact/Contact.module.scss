@@ -1,0 +1,53 @@
+.contact {
+    width: 100%;
+    height: 540px;
+
+    background: url('../../static/content/contact-cosmetic.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    &__form {
+        width: 50%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.3);
+        box-shadow: inset -14px -14px 40px rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(45px);
+    }
+
+    &__form-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 100%;
+        padding: 0 42px;
+    }
+
+    &__heading {
+        margin-bottom: 72px;
+    }
+
+    &__description {
+        margin-bottom: 80px;
+    }
+
+    &__input {
+        width: 300px;
+        height: 55px;
+        padding: 6px 12px;
+        background: #FFFFFF;
+        opacity: 0.7;
+        border-radius: 30px;
+    }
+
+    &__more-btn {
+        margin-left: 38px;
+        padding: 16px 48px;
+        color: #FFFFFF;
+        background-color: #097F8A;
+        border-radius: 3px;
+    }
+
+    &__search {
+        display: flex;
+    }
+}

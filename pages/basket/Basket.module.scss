@@ -1,0 +1,23 @@
+.main--basket {
+    background-color: #EAF6ED;
+}
+
+.basket {
+    &__table {
+        width: 100%;
+        margin-top: 36px;
+    }
+
+    &__table-head {
+        text-align: center;
+    }
+
+    &__checkout {
+        margin-top: 55px;
+    }
+
+    &__checkout-text {
+        font-weight: bold;
+        margin-left: 32px;
+    }
+}

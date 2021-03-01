@@ -1,0 +1,31 @@
+.product {
+    width: 350px;
+
+    &__container {
+        display: flex;
+        padding: 16px 12px;
+    }
+
+    &__img {
+        width: 150px;
+    }
+
+    &__cost {
+        display: block;
+        color: #8ECAC7;
+        margin-top: 12px;
+        font-size: 19px;
+        line-height: 27px;
+    }
+
+    &__btn {
+        width: 135px;
+        margin-top: 14px;
+        border-radius: 2px;
+        background-color: #8ECAC7;
+    }
+
+    &__info {
+        margin-left: 30px;
+    }
+}
