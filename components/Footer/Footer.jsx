@@ -8,7 +8,7 @@ import classnames from './Footer.module.scss'
 const Footer = () => (
     <footer className={classnames['footer']}>
         <div className={classnames['footer__container']}>
-            <Logo />
+            <Logo className={classnames['footer__logo']} />
             <div className={classnames['footer__content']}>
                 <Catalog className={classnames['footer__catalog']} />
             </div>

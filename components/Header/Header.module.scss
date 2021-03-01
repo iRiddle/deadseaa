@@ -1,13 +1,33 @@
 .header {
     display: flex;
     height: 80px;
+    min-width: 320px;
+    max-width: 1920px;
+    margin: 0 auto;
     background-color: #fff;
 
     &__container {
         display: flex;
-        justify-content: space-between;
+        flex-direction: column;
         width: 100%;
         padding: 0 35px;
+
+        @media (max-width: 767px) {
+            padding: 0 12px;
+        }
+    }
+
+    &__top {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        height: 100%;
+    }
+
+    &__bottom {
+        display: flex;
+        justify-content: center;
+        width: 100%;
     }
 
     &__left-side,
@@ -16,8 +36,30 @@
         align-items: center;
     }
 
+    &__left-side {
+        margin-right: 24px;
+    }
+
     &__logo {
         margin-right: 86px;
+
+        @media (max-width: 767px) {
+            margin: 0;
+        }
+
+        @media (min-width: 768px) and (max-width: 1023px) {
+            margin-right: 43px;
+        }
+    }
+
+    &__burger {
+        display: none;
+        margin-right: 12px;
+        background: none;
+
+        @media (max-width: 767px) {
+            display: flex;
+        }
     }
 
     &__list-links {
@@ -29,6 +71,10 @@
 
         &:last-child {
             margin-right: 0;
+        }
+
+        @media (min-width: 768px) and (max-width: 1023px) {
+            margin-right: 23px;
         }
     }
 
@@ -44,6 +90,21 @@
         background-color: #fff;
         border-radius: 30px;
         padding: 0 15px;
+
+        @media (max-width: 575px) {
+            display: none;
+        }
+    }
+
+    &__search--mobile {
+        display: flex;
+        align-items: center;
+        width: 320px;
+        border: 1px solid #CAE4E3;
+        background-color: #fff;
+        border-radius: 30px;
+        padding: 0 15px;
+        transition: 0.4s;
     }
 
     &__lk,
@@ -59,5 +120,21 @@
 
     &--color-salad {
         background-color: #EAF6ED;
+    }
+
+    &__navigation {
+        @media (max-width: 767px) {
+            display: none;
+        }
+    }
+
+    &__search--mobile-btn {
+        display: none;
+        background: none;
+        margin-left: 20px;
+
+        @media (max-width: 575px) {
+            display: flex;
+        }
     }
 }

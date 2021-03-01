@@ -8,8 +8,6 @@ const app = next({ dev })
 
 const handle = app.getRequestHandler()
 
-
-
 const api = new WooCommerceRestApi({
     url: "https://kosmetika.sandev.online/",
     consumerKey: "ck_bbc22756603df50d76c39b91e851c1c2385298b3",

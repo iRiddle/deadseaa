@@ -9,6 +9,10 @@
         display: flex;
         justify-content: center;
         padding: 10px 12px;
+
+        &--not {
+            padding: 0;
+        }
     }
 
     &__text {

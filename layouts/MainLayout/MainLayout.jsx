@@ -6,6 +6,7 @@ import Footer from '../../components/Footer'
 import classnames from './MainLayout.module.scss'
 
 const MainLayout = ({ children, headerIsSalad = false, className }) => (
+
     <div className={classnames['page-container']}>
         <Header headerIsSalad={headerIsSalad} />
         <div className={classnames['page-container__content-wrap']}>

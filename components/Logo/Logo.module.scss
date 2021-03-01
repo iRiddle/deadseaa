@@ -6,5 +6,9 @@
         margin-left: -12px;
         z-index: 1;
         line-height: 0.9;
+
+        @media (max-width: 767px) {
+            margin: 0;
+        }
     }
 }

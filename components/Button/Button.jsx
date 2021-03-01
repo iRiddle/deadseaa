@@ -3,9 +3,9 @@ import Image from 'next/image'
 
 import classnames from './Button.module.scss'
 
-const Button = ({ text, hasIcon, className, onClick, disabled }) => (
+const Button = ({ text, hasIcon, className, notContainer, onClick, disabled }) => (
     <button className={cn(classnames['button'], className)} onClick={onClick} disabled={disabled}>
-        <div className={classnames['button__container']}>
+        <div className={cn(classnames['button__container'], notContainer && classnames['button__container--not'])}>
             {hasIcon &&
                 <Image
                     src="/static/open.svg"

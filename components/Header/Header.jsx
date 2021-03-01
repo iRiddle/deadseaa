@@ -1,76 +1,48 @@
-import Link from 'next/link'
+import { useState } from 'react'
 import Image from 'next/image'
 import cn from 'classnames'
 
-import Logo from '../Logo'
+import HeaderLeft from './HeaderLeft'
+import HeaderRight from './HeaderRight'
 
 import classnames from './Header.module.scss'
 
-const Header = ({ headerIsSalad }) => (
-    <header className={cn(classnames['header'], headerIsSalad && classnames['header--color-salad'])}>
-        <div className={classnames['header__container']}>
-            <div className={classnames['header__left-side']}>
-                <Logo className={classnames['header__logo']} />
-                <nav>
-                    <ul className={classnames['header__list-links']}>
-                        <li className={classnames['header__link']}>
-                            <Link href="/">
-                                <a>Главная</a>
-                            </Link>
-                        </li>
-                        <li className={classnames['header__link']}>
-                            <Link href="/catalog">
-                                <a>Каталог</a>
-                            </Link>
-                        </li>
-                        <li className={classnames['header__link']}>
-                            <Link href="/blog">
-                                <a>Блог</a>
-                            </Link>
-                        </li>
-                        <li className={classnames['header__link']}>
-                            <Link href="/production">
-                                <a>Продукция</a>
-                            </Link>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-            <div className={classnames['header__right-side']}>
-                <div className={classnames['header__search']}>
-                    <input id='search-input' className={classnames['header__input']} type="search" />
-                    <label htmlFor="search-input">
-                        <Image
-                            src="/static/search.svg"
-                            alt="Поиск"
-                            width={13}
-                            height={13}
-                        />
-                    </label>
+const Header = ({ headerIsSalad }) => {
+    const [search, setSearch] = useState(false)
+
+    const handleSearch = () => {
+        setSearch(!search)
+    }
+
+    return (
+        <header className={cn(classnames['header'], headerIsSalad && classnames['header--color-salad'])}>
+            <div className={classnames['header__container']}>
+                <div className={classnames['header__top']}>
+                    <div className={classnames['header__left-side']}>
+                        <HeaderLeft />
+                    </div>
+                    <div className={classnames['header__right-side']}>
+                        <HeaderRight handleSearch={handleSearch} />
+                    </div>
                 </div>
-                <Link href='/profile'>
-                    <a className={classnames['header__lk']}>
-                        <Image
-                            src="/static/lk.svg"
-                            alt="Личный кабинет"
-                            width={13}
-                            height={13}
-                        />
-                    </a>
-                </Link>
-                <Link href='/basket'>
-                    <a className={classnames['header__basket']}>
-                        <Image
-                            src="/static/basket.svg"
-                            alt="Корзина"
-                            width={13}
-                            height={13}
-                        />
-                    </a>
-                </Link>
+                {search && (
+                    <div className={classnames['header__bottom']}>
+                        <div className={classnames['header__search--mobile']}>
+                            <input id='search-input' className={classnames['header__input']} type="search" />
+                            <label htmlFor="search-input">
+                                <Image
+                                    src="/static/search.svg"
+                                    alt="Поиск"
+                                    width={18}
+                                    height={18}
+                                />
+                            </label>
+                        </div>
+                    </div>
+                )}
             </div>
-        </div>
-    </header>
-)
+        </header>
+    )
+}
 
 export default Header

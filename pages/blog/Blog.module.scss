@@ -2,19 +2,23 @@
     &__container {
         display: flex;
         flex-direction: column;
+        align-items: center;
+        padding: 0 12px;
     }
 
     &__news-container {
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-between;
+        justify-content: center;
     }
 
     &__news {
-        margin-bottom: 30px;
+        margin: 10px;
     }
 
     &__more-btn {
+        width: 100%;
+        max-width: 940px;
         background-color: #EAF6ED;
         color: #1A2C2E;
         letter-spacing: 1px;
