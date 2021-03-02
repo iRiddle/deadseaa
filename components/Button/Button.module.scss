@@ -26,13 +26,15 @@
 
     &:disabled {
         border: 2px solid grey;
-        background-color: initial;
+        background-color: grey;
         transform: initial;
         transition: initial;
+        transform: scale(1);
         cursor: initial;
     }
 
     &:disabled:hover {
-        background: initial;
+        transform: scale(1);
+        background: grey;
     }
 }
