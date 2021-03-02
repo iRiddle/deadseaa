@@ -5,7 +5,7 @@ import Button from '../Button'
 
 import classnames from './Product.module.scss'
 
-const Product = ({ img, name, cost = 915 }) => (
+const Product = ({ id, img, name, cost }) => (
     <article className={classnames['product']}>
         <div className={classnames['product__container']}>
             <Image
@@ -16,9 +16,9 @@ const Product = ({ img, name, cost = 915 }) => (
                 className={classnames['product__img']}
             />
             <div className={classnames['product__info']} >
-                <Link href="">
+                <Link href={`/catalog/${id}`}>
                     <a>
-                        {name || 'Масло для тела для предотвращения старения с зеленым чаем и геранью'}
+                        {name}
                     </a>
                 </Link>
                 <span className={classnames['product__cost']}>

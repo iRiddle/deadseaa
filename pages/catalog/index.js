@@ -3,19 +3,27 @@ import CatalogLayout from '../../layouts/CatalogLayout'
 
 import Product from '../../components/Product'
 
-export default function Index(props) {
-    console.log(props)
+const Catalog = (props) => {
+    const catalog = [
+        { id: 1, name: 'Масло для тела для предотвращения старения с зеленым чаем и геранью', cost: 915 },
+        { id: 2, name: 'Масло для тела для предотвращения старения с зеленым чаем и геранью', cost: 915 },
+        { id: 3, name: 'Масло для тела для предотвращения старения с зеленым чаем и геранью', cost: 915 },
+        { id: 4, name: 'Масло для тела для предотвращения старения с зеленым чаем и геранью', cost: 915 },
+        { id: 5, name: 'Масло для тела для предотвращения старения с зеленым чаем и геранью', cost: 915 },
+        { id: 6, name: 'Масло для тела для предотвращения старения с зеленым чаем и геранью', cost: 915 },
+    ];
     return (
         <MainLayout>
             <CatalogLayout>
-                {[1, 3, 4, 5, 6, 7].map(item =>
-                    <Product />
+                {catalog.map(({ id, name, cost }) =>
+                    <Product key={id} id={id} name={name} cost={cost} />
                 )}
-
             </CatalogLayout>
         </MainLayout>
     )
 }
+
+export default Catalog
 
 export async function getStaticProps() {
     const res = await fetch(`http://localhost:3000/getProducts`)
