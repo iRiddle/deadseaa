@@ -7,6 +7,8 @@ import CatalogLayout from '../../layouts/CatalogLayout'
 
 import Button from '../../components/Button'
 
+import NotificationHOC from '../../HOCS/NotificationHOC'
+
 import {
     getDataFromLocal,
     setDataToLocal
@@ -14,7 +16,7 @@ import {
 
 import classnames from './DetailedProduct.module.scss'
 
-const DetailedProduct = () => {
+const DetailedProduct = ({ createNotification }) => {
     const [product, setDetailProduct] = useState({ id: 653, name: ' Масло для тела для предотвращения старения с зеленым чаем и геранью', count: 0, cost: 915 })
 
     const handleIncrease = () => {
@@ -33,6 +35,7 @@ const DetailedProduct = () => {
         const dataFromStorage = getProductsFromStorage()
         const mappedData = [...dataFromStorage, product]
         setDataToLocal('phylosophyProducts', mappedData)
+        createNotification('ok', 'Товары успешно добавлены в корзину')
     }
 
     const { name, cost, count } = product
@@ -83,4 +86,4 @@ const DetailedProduct = () => {
     )
 }
 
-export default DetailedProduct
+export default NotificationHOC(DetailedProduct)
