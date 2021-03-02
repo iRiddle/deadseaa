@@ -25,19 +25,19 @@ const Catalog = (props) => {
 
 export default Catalog
 
-export async function getStaticProps() {
-    const res = await fetch(`http://localhost:3000/getProducts`)
-    console.log(res)
+// export async function getStaticProps() {
+//     const res = await fetch(`http://localhost:3000/getProducts`)
+//     console.log(res)
 
-    // if (!data) {
-    //     return {
-    //         notFound: true,
-    //     }
-    // }
+//     // if (!data) {
+//     //     return {
+//     //         notFound: true,
+//     //     }
+//     // }
 
-    return {
-        props: {
-            "data": 'sds'
-        }
-    }
-}
+//     return {
+//         props: {
+//             "data": 'sds'
+//         }
+//     }
+// }
