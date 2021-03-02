@@ -16,15 +16,15 @@ import {
 
 import classnames from './DetailedProduct.module.scss'
 
-const DetailedProduct = ({ createNotification }) => {
-    const [product, setDetailProduct] = useState({ id: 653, name: ' Масло для тела для предотвращения старения с зеленым чаем и геранью', count: 0, cost: 915 })
+const DetailedProduct = ({ createNotification, product }) => {
+    const [productDetailed, setDetailProduct] = useState({ ...product, count: 0 } || {})
 
     const handleIncrease = () => {
-        setDetailProduct({ ...product, count: product.count + 1 })
+        setDetailProduct({ ...productDetailed, count: productDetailed.count + 1 })
     }
 
     const handleDecrease = () => {
-        setDetailProduct({ ...product, count: product.count - 1 })
+        setDetailProduct({ ...productDetailed, count: productDetailed.count - 1 })
     }
 
     const getProductsFromStorage = () => {
@@ -38,8 +38,8 @@ const DetailedProduct = ({ createNotification }) => {
         createNotification('ok', 'Товары успешно добавлены в корзину')
     }
 
-    const { name, cost, count } = product
-
+    const { title, cost, count, description, regular_price } = productDetailed
+    console.log(productDetailed)
     return (
         <MainLayout>
             <CatalogLayout>
@@ -56,10 +56,10 @@ const DetailedProduct = ({ createNotification }) => {
                         </div>
                         <div className={classnames['detailed-product__right']}>
                             <h1>
-                                {name}
+                                {title}
                             </h1>
                             <span className={classnames['detailed-product__cost']}>
-                                {`${cost}руб.`}
+                                {`${regular_price}руб.`}
                             </span>
                             <div className={classnames['detailed-product__operations']}>
                                 <div>
@@ -67,14 +67,12 @@ const DetailedProduct = ({ createNotification }) => {
                                     <span className={classnames['detailed-product__total']}>{count}</span>
                                     <Button className={classnames['detailed-product__op-btn']} onClick={handleIncrease} text='+' />
                                 </div>
-                                <Button className={classnames['detailed-product__buy-btn']} onClick={handleSetProduct} text='Купить' />
+                                <Button className={classnames['detailed-product__buy-btn']} onClick={handleSetProduct} text='Купить' disabled={count < 1} />
                             </div>
                             <h2 className={classnames['detailed-product__secondary']}>
                                 Характеристики:
                             </h2>
-                            <p className={classnames['detailed-product__description']}>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sagittis tempus sem lacinia venenatis. Viverra nec volutpat ultricies in consequat non porttitor sit. Nunc amet scelerisque justo, id quam scelerisque. Fermentum morbi odio lorem non vitae nisl blandit.
-                            </p>
+                            <p className={classnames['detailed-product__description']} dangerouslySetInnerHTML={{ __html: description }} />
                         </div>
                     </div>
                     <div className={classnames['detailed-product__bottom']}>
@@ -87,3 +85,35 @@ const DetailedProduct = ({ createNotification }) => {
 }
 
 export default NotificationHOC(DetailedProduct)
+
+export async function getStaticProps({ params }) {
+    const res = await fetch(`http://localhost:3000/getProducts/${params.id}`)
+    const data = await res.json()
+
+    if (!data) {
+        return {
+            notFound: true,
+        }
+    }
+
+    const { product } = data
+
+    return {
+        props: {
+            product
+        }
+    }
+}
+
+export async function getStaticPaths() {
+    const res = await fetch(`http://localhost:3000/getProducts`);
+    const data = await res.json();
+
+    const { products } = data;
+
+    const paths = products.map((product) => ({
+        params: { id: product.id.toString() },
+    }))
+
+    return { paths, fallback: false }
+}

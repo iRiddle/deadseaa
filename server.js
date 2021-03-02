@@ -1,6 +1,6 @@
 const express = require('express')
 const next = require('next')
-const WooCommerceRestApi = require("@woocommerce/woocommerce-rest-api").default;
+const WooCommerceAPI = require('woocommerce-api');
 
 const port = parseInt(process.env.PORT, 10) || 3000
 const dev = process.env.NODE_ENV !== 'production'
@@ -8,12 +8,13 @@ const app = next({ dev })
 
 const handle = app.getRequestHandler()
 
-const api = new WooCommerceRestApi({
-    url: "https://kosmetika.sandev.online/",
-    consumerKey: "ck_bbc22756603df50d76c39b91e851c1c2385298b3",
-    consumerSecret: "cs_ce7e0c40b0c4aeccb872bebdc0a58a823d6d3598",
-    version: "wc/v3"
+const WooCommerce = new WooCommerceAPI({
+    url: 'https://kosmetika.sandev.online/',
+    consumerKey: 'ck_bbc22756603df50d76c39b91e851c1c2385298b3',
+    consumerSecret: 'cs_ce7e0c40b0c4aeccb872bebdc0a58a823d6d3598',
+    version: 'v3'
 });
+
 
 app.prepare().then(() => {
     const server = express()
@@ -23,9 +24,16 @@ app.prepare().then(() => {
     })
 
     server.get('/getProducts', (req, res) => {
-        const data = api.get("products")
-            .then((response) => response.data)
-        return app.render(req, data, '/catalog', req.query)
+        WooCommerce.get('products', function (err, data, response) {
+            res.json(JSON.parse(response))
+        })
+    })
+
+    server.get('/getProducts/:id', (req, res) => {
+        const productId = req.params.id
+        WooCommerce.get(`products/${productId}`, function (err, data, response) {
+            res.json(JSON.parse(response))
+        })
     })
 
     server.all('*', (req, res) => {

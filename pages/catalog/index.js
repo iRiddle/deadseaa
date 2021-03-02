@@ -3,21 +3,20 @@ import CatalogLayout from '../../layouts/CatalogLayout'
 
 import Product from '../../components/Product'
 
-const Catalog = (props) => {
-    const catalog = [
-        { id: 1, name: 'Масло для тела для предотвращения старения с зеленым чаем и геранью', cost: 915 },
-        { id: 2, name: 'Масло для тела для предотвращения старения с зеленым чаем и геранью', cost: 915 },
-        { id: 3, name: 'Масло для тела для предотвращения старения с зеленым чаем и геранью', cost: 915 },
-        { id: 4, name: 'Масло для тела для предотвращения старения с зеленым чаем и геранью', cost: 915 },
-        { id: 5, name: 'Масло для тела для предотвращения старения с зеленым чаем и геранью', cost: 915 },
-        { id: 6, name: 'Масло для тела для предотвращения старения с зеленым чаем и геранью', cost: 915 },
-    ];
+const Catalog = ({ data }) => {
+    const { products } = data
     return (
         <MainLayout>
             <CatalogLayout>
-                {catalog.map(({ id, name, cost }) =>
-                    <Product key={id} id={id} name={name} cost={cost} />
-                )}
+                {products.length ? products.map(({ id, title, featured_src, regular_price }) =>
+                    <Product
+                        key={id}
+                        id={id}
+                        title={title}
+                        featuredSrc={featured_src}
+                        regularPrice={regular_price}
+                    />
+                ) : 'Нет данных'}
             </CatalogLayout>
         </MainLayout>
     )
@@ -25,19 +24,19 @@ const Catalog = (props) => {
 
 export default Catalog
 
-// export async function getStaticProps() {
-//     const res = await fetch(`http://localhost:3000/getProducts`)
-//     console.log(res)
+export async function getStaticProps() {
+    const res = await fetch(`http://localhost:3000/getProducts`)
+    const data = await res.json()
 
-//     // if (!data) {
-//     //     return {
-//     //         notFound: true,
-//     //     }
-//     // }
+    if (!data) {
+        return {
+            notFound: true,
+        }
+    }
 
-//     return {
-//         props: {
-//             "data": 'sds'
-//         }
-//     }
-// }
+    return {
+        props: {
+            data
+        }
+    }
+}
