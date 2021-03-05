@@ -30,7 +30,7 @@ const Basket = () => {
     }
 
     const getTotal = () => {
-        return products.reduce((accum, product) => accum + (product.cost * product.count), 0)
+        return products.reduce((accum, product) => accum + (product.regular_price * product.count), 0)
     }
 
     if (!products.length) {
@@ -55,15 +55,15 @@ const Basket = () => {
                             <td className={classnames['basket__table-head']}>Стоимость</td>
                             <td className={classnames['basket__table-head']}>Количество</td>
                             <td className={classnames['basket__table-head']}>Сумма</td>
-                            <td></td>
+                            <td />
                         </tr>
                     </thead>
                     <tbody>
-                        {products.map(({ id, name, cost, count }) =>
+                        {products.map(({ id, title, regular_price, count }) =>
                             <PaymentProduct
                                 key={id}
-                                name={name}
-                                cost={cost}
+                                title={title}
+                                regularPrice={regular_price}
                                 count={count}
                                 handleIncrease={() => handleIncrease(id)}
                                 handleDecrease={() => handleDecrease(id)}

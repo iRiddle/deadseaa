@@ -9,15 +9,13 @@ import Button from '../../components/Button'
 
 import NotificationHOC from '../../HOCS/NotificationHOC'
 
-import {
-    getDataFromLocal,
-    setDataToLocal
-} from '../../storage'
+import { useSetToStorage } from './hooks/useSetToStorage'
 
 import classnames from './DetailedProduct.module.scss'
 
 const DetailedProduct = ({ createNotification, product }) => {
     const [productDetailed, setDetailProduct] = useState({ ...product, count: 0 } || {})
+    const { setToStorage } = useSetToStorage(createNotification)
 
     const handleIncrease = () => {
         setDetailProduct({ ...productDetailed, count: productDetailed.count + 1 })
@@ -27,19 +25,11 @@ const DetailedProduct = ({ createNotification, product }) => {
         setDetailProduct({ ...productDetailed, count: productDetailed.count - 1 })
     }
 
-    const getProductsFromStorage = () => {
-        return getDataFromLocal('phylosophyProducts') || [];
+    const handleSetToStorage = () => {
+        setToStorage(productDetailed)
     }
 
-    const handleSetProduct = () => {
-        const dataFromStorage = getProductsFromStorage()
-        const mappedData = [...dataFromStorage, product]
-        setDataToLocal('phylosophyProducts', mappedData)
-        createNotification('ok', 'Товары успешно добавлены в корзину')
-    }
-
-    const { title, cost, count, description, regular_price } = productDetailed
-    console.log(productDetailed)
+    const { title, count, description, regular_price } = productDetailed
     return (
         <MainLayout>
             <CatalogLayout>
@@ -67,7 +57,7 @@ const DetailedProduct = ({ createNotification, product }) => {
                                     <span className={classnames['detailed-product__total']}>{count}</span>
                                     <Button className={classnames['detailed-product__op-btn']} onClick={handleIncrease} text='+' />
                                 </div>
-                                <Button className={classnames['detailed-product__buy-btn']} onClick={handleSetProduct} text='Купить' disabled={count < 1} />
+                                <Button className={classnames['detailed-product__buy-btn']} onClick={handleSetToStorage} text='Купить' disabled={count < 1} />
                             </div>
                             <h2 className={classnames['detailed-product__secondary']}>
                                 Характеристики:

@@ -7,8 +7,7 @@ import { IMAGE_PLACEHOLDER } from '../../constants'
 
 import classnames from './Product.module.scss'
 
-const Product = ({ id, featuredSrc, title, regularPrice }) => {
-    console.log(featuredSrc)
+const Product = ({ id, featuredSrc, title, regularPrice, handleSetToStorage }) => {
     return (
         <article className={classnames['product']}>
             <div className={classnames['product__container']}>
@@ -28,7 +27,7 @@ const Product = ({ id, featuredSrc, title, regularPrice }) => {
                     <span className={classnames['product__cost']}>
                         {`${regularPrice} руб.`}
                     </span>
-                    <Button text='Купить' className={classnames['product__btn']} />
+                    <Button text='Купить' className={classnames['product__btn']} onClick={() => handleSetToStorage(id)} />
                 </div>
             </div>
         </article>

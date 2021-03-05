@@ -3,8 +3,19 @@ import CatalogLayout from '../../layouts/CatalogLayout'
 
 import Product from '../../components/Product'
 
-const Catalog = ({ data }) => {
+import NotificationHOC from '../../HOCS/NotificationHOC'
+
+import { useSetToStorage } from './hooks/useSetToStorage'
+
+const Catalog = ({ data, createNotification }) => {
     const { products } = data
+    const { setToStorage } = useSetToStorage(createNotification)
+
+    const handleSetToStorage = (id) => {
+        const product = products.filter((product) => product.id === id)[0]
+        setToStorage({ ...product, count: product.count ? product.count + 1 : 1 })
+    }
+
     return (
         <MainLayout>
             <CatalogLayout>
@@ -15,14 +26,13 @@ const Catalog = ({ data }) => {
                         title={title}
                         featuredSrc={featured_src}
                         regularPrice={regular_price}
+                        handleSetToStorage={handleSetToStorage}
                     />
                 ) : 'Нет данных'}
             </CatalogLayout>
         </MainLayout>
     )
 }
-
-export default Catalog
 
 export async function getStaticProps() {
     const res = await fetch(`http://localhost:3000/getProducts`)
@@ -40,3 +50,5 @@ export async function getStaticProps() {
         }
     }
 }
+
+export default NotificationHOC(Catalog)
