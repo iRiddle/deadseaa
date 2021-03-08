@@ -7,7 +7,7 @@ import classnames from './PaymentProduct.module.scss'
 
 const PaymentProduct = ({
     className,
-    title,
+    name,
     regularPrice,
     count,
     handleIncrease,
@@ -24,7 +24,7 @@ const PaymentProduct = ({
                     />
                 </div>
             </td>
-            <td className={classnames['payment-product__data']}>{title}</td>
+            <td className={classnames['payment-product__data']}>{name}</td>
             <td className={classnames['payment-product__data']}>{`${regularPrice}руб.`}</td>
             <td className={classnames['payment-product__data']}>
                 <Button
