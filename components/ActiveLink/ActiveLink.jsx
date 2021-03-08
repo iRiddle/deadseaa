@@ -3,7 +3,8 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 
 const ActiveLink = ({ children, activeClassName, ...props }) => {
-    const { asPath } = useRouter()
+    const { asPath, push } = useRouter()
+
     const child = Children.only(children)
     const childClassName = child.props.className || ''
 
@@ -12,10 +13,16 @@ const ActiveLink = ({ children, activeClassName, ...props }) => {
             ? `${childClassName} ${activeClassName}`.trim()
             : childClassName
 
+    const pushHistory = (e) => {
+        e.preventDefault();
+        push(props.href)
+    }
+
     return (
         <Link {...props}>
             {React.cloneElement(child, {
                 className: className || null,
+                onClick: (e) => pushHistory(e)
             })}
         </Link>
     )
