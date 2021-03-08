@@ -7,7 +7,7 @@ import CatalogAside from './CatalogAside'
 
 import classnames from './CatalogLayout.module.scss'
 
-const CatalogLayout = ({ children }) => {
+const CatalogLayout = ({ children, productCategories }) => {
     const hitsMock = [
         { id: 1, text: 'Кондиционер для волос с кератином и витамином Е', src: '/static/content/hit1.png' },
         { id: 2, text: 'Кондиционер для волос с кератином и витамином Е', src: '/static/content/hit2.png' },
@@ -17,6 +17,7 @@ const CatalogLayout = ({ children }) => {
     ]
 
     const breadcrumbs = [{ id: 1, href: '/', name: 'Категории' }]
+
     return (
         <div className={classnames['catalog-layout']}>
             <div className={classnames['catalog-layout__container']}>
@@ -24,7 +25,7 @@ const CatalogLayout = ({ children }) => {
                     <h2 className={classnames['catalog-layout__head']}>
                         Категории
                     </h2>
-                    <CatalogAside />
+                    <CatalogAside productCategories={productCategories} />
                     <h2 className={cn(classnames['catalog-layout__head'], classnames['catalog-layout__head--gap-top'])}>
                         Бестселлеры
                     </h2>
