@@ -59,10 +59,10 @@ const Basket = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {products.map(({ id, title, regular_price, count }) =>
+                        {products.map(({ id, name, regular_price, count }) =>
                             <PaymentProduct
                                 key={id}
-                                title={title}
+                                name={name}
                                 regularPrice={regular_price}
                                 count={count}
                                 handleIncrease={() => handleIncrease(id)}

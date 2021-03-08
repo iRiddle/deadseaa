@@ -29,7 +29,7 @@ const DetailedProduct = ({ createNotification, product }) => {
         setToStorage(productDetailed)
     }
 
-    const { title, count, description, regular_price } = productDetailed
+    const { name, count, description, regular_price } = productDetailed
     return (
         <MainLayout>
             <CatalogLayout>
@@ -46,10 +46,10 @@ const DetailedProduct = ({ createNotification, product }) => {
                         </div>
                         <div className={classnames['detailed-product__right']}>
                             <h1>
-                                {title}
+                                {name}
                             </h1>
                             <span className={classnames['detailed-product__cost']}>
-                                {`${regular_price}руб.`}
+                                {regular_price ? `${regular_price}руб.` : 'Нет цены'}
                             </span>
                             <div className={classnames['detailed-product__operations']}>
                                 <div>
@@ -62,7 +62,7 @@ const DetailedProduct = ({ createNotification, product }) => {
                             <h2 className={classnames['detailed-product__secondary']}>
                                 Характеристики:
                             </h2>
-                            <p className={classnames['detailed-product__description']} dangerouslySetInnerHTML={{ __html: description }} />
+                            <p className={classnames['detailed-product__description']} dangerouslySetInnerHTML={{ __html: description ? description : '<h3>Нет описания</h3>' }} />
                         </div>
                     </div>
                     <div className={classnames['detailed-product__bottom']}>
@@ -74,19 +74,14 @@ const DetailedProduct = ({ createNotification, product }) => {
     )
 }
 
-export default NotificationHOC(DetailedProduct)
-
 export async function getStaticProps({ params }) {
-    const res = await fetch(`http://localhost:3000/getProducts/${params.id}`)
-    const data = await res.json()
+    const product = await fetch(`http://localhost:3000/getProducts/${params.id}`).then((res) => res.json())
 
-    if (!data) {
+    if (!product) {
         return {
             notFound: true,
         }
     }
-
-    const { product } = data
 
     return {
         props: {
@@ -96,10 +91,7 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-    const res = await fetch(`http://localhost:3000/getProducts`);
-    const data = await res.json();
-
-    const { products } = data;
+    const products = await fetch(`http://localhost:3000/getProducts`).then((res) => res.json())
 
     const paths = products.map((product) => ({
         params: { id: product.id.toString() },
@@ -107,3 +99,5 @@ export async function getStaticPaths() {
 
     return { paths, fallback: false }
 }
+
+export default NotificationHOC(DetailedProduct)

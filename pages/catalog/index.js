@@ -1,3 +1,5 @@
+import Head from 'next/head'
+
 import MainLayout from '../../layouts/MainLayout'
 import CatalogLayout from '../../layouts/CatalogLayout'
 
@@ -7,8 +9,7 @@ import NotificationHOC from '../../HOCS/NotificationHOC'
 
 import { useSetToStorage } from './hooks/useSetToStorage'
 
-const Catalog = ({ data, createNotification }) => {
-    const { products } = data
+const Catalog = ({ products, categories, createNotification }) => {
     const { setToStorage } = useSetToStorage(createNotification)
 
     const handleSetToStorage = (id) => {
@@ -17,36 +18,44 @@ const Catalog = ({ data, createNotification }) => {
     }
 
     return (
-        <MainLayout>
-            <CatalogLayout>
-                {products.length ? products.map(({ id, title, featured_src, regular_price }) =>
-                    <Product
-                        key={id}
-                        id={id}
-                        title={title}
-                        featuredSrc={featured_src}
-                        regularPrice={regular_price}
-                        handleSetToStorage={handleSetToStorage}
-                    />
-                ) : 'Нет данных'}
-            </CatalogLayout>
-        </MainLayout>
+        <>
+            <Head>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            </Head>
+            <MainLayout>
+                <CatalogLayout productCategories={categories}>
+                    {products.length ? products.map(({ id, name, images, regular_price }) =>
+                        <Product
+                            key={id}
+                            id={id}
+                            name={name}
+                            images={images}
+                            regularPrice={regular_price}
+                            handleSetToStorage={handleSetToStorage}
+                        />
+                    ) : 'Нет данных'}
+                </CatalogLayout>
+            </MainLayout>
+        </>
     )
 }
 
 export async function getStaticProps() {
-    const res = await fetch(`http://localhost:3000/getProducts`)
-    const data = await res.json()
+    const products = await fetch(`http://localhost:3000/getProducts`).then((res) => res.json())
+    const categories = await fetch(`http://localhost:3000/getCategories`).then((res) => res.json())
 
-    if (!data) {
+    if (!products && !categories) {
         return {
             notFound: true,
         }
     }
 
+    console.log(categories)
+
     return {
         props: {
-            data
+            products,
+            categories
         }
     }
 }
