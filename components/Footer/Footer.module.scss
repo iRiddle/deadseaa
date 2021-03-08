@@ -1,8 +1,4 @@
 .footer {
-    // position: absolute;
-    // bottom: 0;
-    // width: 100%;
-    // height: calc(100vh - 240px);
     height: 310px;
     max-width: 1920px;
     margin: 0 auto;
@@ -14,8 +10,11 @@
         padding: 24px 35px;
 
         @media (max-width: 767px) {
+       
             flex-wrap: wrap;
+            padding: 12px;
         }
+
     }
 
     &__content {
@@ -24,7 +23,10 @@
     }
 
     &__logo {
-        margin: 0 12px;
+
+        @media (max-width: 767px) {
+            margin: 0;
+        }
     }
 
     &__catalog {
