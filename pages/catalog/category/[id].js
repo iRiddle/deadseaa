@@ -8,7 +8,7 @@ import NotificationHOC from '../../../HOCS/NotificationHOC'
 
 import { useSetToStorage } from '../hooks/useSetToStorage'
 
-import { getEnvironment } from '../../../config'
+import WooCommerceApi from '../../../services/WooCommerceService'
 
 const Category = ({ products, categories, createNotification }) => {
     const { setToStorage } = useSetToStorage(createNotification)
@@ -37,9 +37,8 @@ const Category = ({ products, categories, createNotification }) => {
 }
 
 export async function getStaticProps({ params }) {
-    const environment = getEnvironment()
-    const products = await fetch(`${environment}/getProductsByCategory/${params.id}`).then((res) => res.json())
-    const categories = await fetch(`${environment}/getCategories`).then((res) => res.json())
+    const products = await WooCommerceApi.get(`products`, { category: params.id }).then(response => response.data).catch(err => err)
+    const categories = await WooCommerceApi.get(`products/categories`).then(response => response.data).catch(err => err)
 
     if (!products) {
         return {
@@ -56,8 +55,7 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-    const environment = getEnvironment()
-    const categories = await fetch(`${environment}/getCategories`).then((res) => res.json())
+    const categories = await WooCommerceApi.get(`products/categories`).then(response => response.data).catch(err => err)
 
     const paths = categories.map((category) => ({
         params: { id: category.id.toString() },

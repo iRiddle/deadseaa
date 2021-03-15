@@ -9,7 +9,7 @@ import NotificationHOC from '../../HOCS/NotificationHOC'
 
 import { useSetToStorage } from './hooks/useSetToStorage'
 
-import { getEnvironment } from '../../config'
+import WooCommerceApi from '../../services/WooCommerceService'
 
 const Catalog = ({ products, categories, createNotification }) => {
     const { setToStorage } = useSetToStorage(createNotification)
@@ -46,9 +46,8 @@ const Catalog = ({ products, categories, createNotification }) => {
 }
 
 export async function getStaticProps() {
-    const environment = getEnvironment()
-    const products = await fetch(`${environment}/getProducts`).then((res) => res.json())
-    const categories = await fetch(`${environment}/getCategories`).then((res) => res.json())
+    const products = await WooCommerceApi.get('products').then(response => response.data).catch(err => err)
+    const categories = await WooCommerceApi.get(`products/categories`).then(response => response.data).catch(err => err)
 
     if (!products && !categories) {
         return {
