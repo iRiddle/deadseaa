@@ -6,12 +6,12 @@ import Product from '../../../components/Product'
 
 import NotificationHOC from '../../../HOCS/NotificationHOC'
 
-import { useSetToStorage } from '../hooks/useSetToStorage'
+import fabricStorage from '../../../hooks/fabricStorage'
 
 import WooCommerceApi from '../../../services/WooCommerceService'
 
 const Category = ({ products, categories, createNotification }) => {
-    const { setToStorage } = useSetToStorage(createNotification)
+    const { setToStorage } = fabricStorage(createNotification)
 
     const handleSetToStorage = (id) => {
         const product = products.filter((product) => product.id === id)[0]

@@ -1,7 +1,6 @@
-import { setDataToLocal, getDataFromLocal } from '../../../storage'
+import { setDataToLocal, getDataFromLocal } from '../storage'
 
-export const useSetToStorage = (createNotification) => {
-
+const fabricStorage = (createNotification) => {
     const setToStorage = (product) => {
         let mappedData = [];
         const dataFromStorage = getProductsFromStorage()
@@ -30,3 +29,4 @@ export const useSetToStorage = (createNotification) => {
     }
 }
 
+export default fabricStorage

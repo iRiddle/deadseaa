@@ -9,7 +9,7 @@ import Button from '../../components/Button'
 
 import NotificationHOC from '../../HOCS/NotificationHOC'
 
-import { useSetToStorage } from './hooks/useSetToStorage'
+import fabricStorage from '../../hooks/fabricStorage'
 
 import WooCommerceApi from '../../services/WooCommerceService'
 
@@ -17,7 +17,7 @@ import classnames from './DetailedProduct.module.scss'
 
 const DetailedProduct = ({ createNotification, product, categories }) => {
     const [productDetailed, setDetailProduct] = useState({ ...product, count: 0 } || {})
-    const { setToStorage } = useSetToStorage(createNotification)
+    const { setToStorage } = fabricStorage(createNotification)
 
     const handleIncrease = () => {
         setDetailProduct({ ...productDetailed, count: productDetailed.count + 1 })
