@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Link from 'next/link'
 
 import MainLayout from '../../layouts/MainLayout'
 import PaymentProduct from '../../components/PaymentProduct'
@@ -73,7 +74,7 @@ const Basket = () => {
                     </tbody>
                 </table>
                 <div className={classnames['basket__checkout']}>
-                    <Button text='Перейти к оформлению' onClick={() => localStorage.removeItem('phylosophyProduct')} />
+                    <Link href="/checkout"><a><Button text='Перейти к оформлению' onClick={() => localStorage.removeItem('phylosophyProduct')} /></a></Link>
                     <span className={classnames['basket__checkout-text']} >{`Итого: ${getTotal()}руб`}</span>
                 </div>
             </section>
