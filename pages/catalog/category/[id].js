@@ -8,6 +8,8 @@ import NotificationHOC from '../../../HOCS/NotificationHOC'
 
 import { useSetToStorage } from '../hooks/useSetToStorage'
 
+import { getEnvironment } from '../../../config'
+
 const Category = ({ products, categories, createNotification }) => {
     const { setToStorage } = useSetToStorage(createNotification)
 
@@ -35,8 +37,9 @@ const Category = ({ products, categories, createNotification }) => {
 }
 
 export async function getStaticProps({ params }) {
-    const products = await fetch(`http://localhost:3000/getProductsByCategory/${params.id}`).then((res) => res.json())
-    const categories = await fetch(`http://localhost:3000/getCategories`).then((res) => res.json())
+    const environment = getEnvironment()
+    const products = await fetch(`${environment}/getProductsByCategory/${params.id}`).then((res) => res.json())
+    const categories = await fetch(`${environment}/getCategories`).then((res) => res.json())
 
     if (!products) {
         return {
@@ -53,7 +56,8 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-    const categories = await fetch(`http://localhost:3000/getCategories`).then((res) => res.json())
+    const environment = getEnvironment()
+    const categories = await fetch(`${environment}/getCategories`).then((res) => res.json())
 
     const paths = categories.map((category) => ({
         params: { id: category.id.toString() },

@@ -11,6 +11,8 @@ import NotificationHOC from '../../HOCS/NotificationHOC'
 
 import { useSetToStorage } from './hooks/useSetToStorage'
 
+import { getEnvironment } from '../../config'
+
 import classnames from './DetailedProduct.module.scss'
 
 const DetailedProduct = ({ createNotification, product, categories }) => {
@@ -75,8 +77,9 @@ const DetailedProduct = ({ createNotification, product, categories }) => {
 }
 
 export async function getStaticProps({ params }) {
-    const product = await fetch(`http://localhost:3000/getProducts/${params.id}`).then((res) => res.json())
-    const categories = await fetch(`http://localhost:3000/getCategories`).then((res) => res.json())
+    const environment = getEnvironment()
+    const product = await fetch(`${environment}/getProducts/${params.id}`).then((res) => res.json())
+    const categories = await fetch(`${environment}/getCategories`).then((res) => res.json())
 
     if (!product) {
         return {
@@ -93,7 +96,8 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-    const products = await fetch(`http://localhost:3000/getProducts`).then((res) => res.json())
+    const environment = getEnvironment()
+    const products = await fetch(`${environment}/getProducts`).then((res) => res.json())
 
     const paths = products.map((product) => ({
         params: { id: product.id.toString() },
