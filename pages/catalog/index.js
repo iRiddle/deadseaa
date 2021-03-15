@@ -13,8 +13,13 @@ const Catalog = ({ products, categories, createNotification }) => {
     const { setToStorage } = useSetToStorage(createNotification)
 
     const handleSetToStorage = (id) => {
-        const product = products.filter((product) => product.id === id)[0]
-        setToStorage({ ...product, count: product.count ? product.count + 1 : 1 })
+        const product = products.filter((product) => product.id === id)[0];
+
+        console.log(product)
+
+        if(product.regular_price && product.regular_price !== 0) {
+            setToStorage({ ...product, count: product.count ? product.count + 1 : 1 })
+        } 
     }
 
     return (
@@ -49,8 +54,6 @@ export async function getStaticProps() {
             notFound: true,
         }
     }
-
-    console.log(categories)
 
     return {
         props: {

@@ -5,13 +5,24 @@ import cn from 'classnames'
 import HeaderLeft from './HeaderLeft'
 import HeaderRight from './HeaderRight'
 
+import Login from '../Login'
+
 import classnames from './Header.module.scss'
 
 const Header = ({ headerIsSalad }) => {
     const [search, setSearch] = useState(false)
+    const [hovered, setHover] = useState(false)
 
     const handleSearch = () => {
         setSearch(!search)
+    }
+
+    const handleMouseEnterLogin = () => {
+        setHover(true)
+    }
+
+    const handleMouseLeaveLogin = () => {
+        setHover(false)
     }
 
     return (
@@ -22,7 +33,11 @@ const Header = ({ headerIsSalad }) => {
                         <HeaderLeft />
                     </div>
                     <div className={classnames['header__right-side']}>
-                        <HeaderRight handleSearch={handleSearch} />
+                        <HeaderRight
+                            handleSearch={handleSearch}
+                            handleMouseEnterLogin={handleMouseEnterLogin}
+                            handleMouseLeaveLogin={handleMouseLeaveLogin}
+                        />
                     </div>
                 </div>
                 {search && (
@@ -40,6 +55,11 @@ const Header = ({ headerIsSalad }) => {
                         </div>
                     </div>
                 )}
+                <Login
+                    hovered={hovered}
+                    handleMouseEnterLogin={handleMouseEnterLogin}
+                    handleMouseLeaveLogin={handleMouseLeaveLogin}
+                />
             </div>
         </header>
     )

@@ -27,7 +27,7 @@ const Product = ({ id, images, name, regularPrice, handleSetToStorage }) => {
                     <span className={classnames['product__cost']}>
                         {regularPrice ? `${regularPrice}руб.` : 'Нет цены'}
                     </span>
-                    <Button text='Купить' className={classnames['product__btn']} onClick={() => handleSetToStorage(id)} />
+                    <Button text='Купить' className={classnames['product__btn']} disabled={!regularPrice && regularPrice !== 0} onClick={() => handleSetToStorage(id)} />
                 </div>
             </div>
         </article>

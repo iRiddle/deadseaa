@@ -6,7 +6,7 @@ import classnames from './Table.module.scss'
 
 const Table = ({ className }) => {
     return (
-        <table className={cn(classnames['table'], className)} border="0" cellspacing="0" cellpadding="0">
+        <table className={cn(classnames['table'], className)} border="0" cellSpacing="0" cellPadding="0">
             <thead>
                 <tr>
                     <th>№ заказа</th>

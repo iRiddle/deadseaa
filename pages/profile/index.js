@@ -3,7 +3,7 @@ import ProfileLayout from '../../layouts/ProfileLayout'
 
 import Table from '../../components/Table'
 
-const index = () => {
+const Profile = () => {
     return (
         <MainLayout>
             <ProfileLayout>
@@ -13,4 +13,4 @@ const index = () => {
     )
 }
 
-export default index
+export default Profile

@@ -13,7 +13,7 @@ import { useSetToStorage } from './hooks/useSetToStorage'
 
 import classnames from './DetailedProduct.module.scss'
 
-const DetailedProduct = ({ createNotification, product }) => {
+const DetailedProduct = ({ createNotification, product, categories }) => {
     const [productDetailed, setDetailProduct] = useState({ ...product, count: 0 } || {})
     const { setToStorage } = useSetToStorage(createNotification)
 
@@ -32,7 +32,7 @@ const DetailedProduct = ({ createNotification, product }) => {
     const { name, count, description, regular_price } = productDetailed
     return (
         <MainLayout>
-            <CatalogLayout>
+            <CatalogLayout productCategories={categories}>
                 <section className={classnames['detailed-product']}>
                     <div className={classnames['detailed-product__top']}>
                         <div className={classnames['detailed-product__left']}>
@@ -55,7 +55,7 @@ const DetailedProduct = ({ createNotification, product }) => {
                                 <div>
                                     <Button className={classnames['detailed-product__op-btn']} onClick={handleDecrease} text='-' disabled={count < 1} />
                                     <span className={classnames['detailed-product__total']}>{count}</span>
-                                    <Button className={classnames['detailed-product__op-btn']} onClick={handleIncrease} text='+' />
+                                    <Button className={classnames['detailed-product__op-btn']} onClick={handleIncrease} text='+' disabled={!regular_price && regular_price !== 0} />
                                 </div>
                                 <Button className={classnames['detailed-product__buy-btn']} onClick={handleSetToStorage} text='Купить' disabled={count < 1} />
                             </div>
@@ -76,6 +76,7 @@ const DetailedProduct = ({ createNotification, product }) => {
 
 export async function getStaticProps({ params }) {
     const product = await fetch(`http://localhost:3000/getProducts/${params.id}`).then((res) => res.json())
+    const categories = await fetch(`http://localhost:3000/getCategories`).then((res) => res.json())
 
     if (!product) {
         return {
@@ -85,7 +86,8 @@ export async function getStaticProps({ params }) {
 
     return {
         props: {
-            product
+            product,
+            categories
         }
     }
 }

@@ -5,7 +5,11 @@ import Button from '../../Button'
 
 import classnames from '../Header.module.scss'
 
-const HeaderRight = ({ handleSearch }) => {
+const HeaderRight = ({
+    handleSearch,
+    handleMouseEnterLogin,
+    handleMouseLeaveLogin
+}) => {
     return (
         <>
             <div className={classnames['header__search']}>
@@ -20,7 +24,10 @@ const HeaderRight = ({ handleSearch }) => {
                 </label>
             </div>
             <Link href='/profile'>
-                <a className={classnames['header__lk']}>
+                <a className={classnames['header__lk']}
+                    onMouseEnter={handleMouseEnterLogin}
+                    onMouseLeave={handleMouseLeaveLogin}
+                >
                     <Image
                         src="/static/lk.svg"
                         alt="Личный кабинет"

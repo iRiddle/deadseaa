@@ -3,7 +3,6 @@ import { setDataToLocal, getDataFromLocal } from '../../../storage'
 export const useSetToStorage = (createNotification) => {
 
     const setToStorage = (product) => {
-        console.log(product)
         let mappedData = [];
         const dataFromStorage = getProductsFromStorage()
         const isExistInStorage = findProduct(dataFromStorage, product)
