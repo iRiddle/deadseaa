@@ -15,17 +15,21 @@ const Blog = ({ posts }) => {
                 <div className={classnames['blog__container']}>
                     <div className={classnames['blog__news-container']}>
                         {posts && posts.length > 0 ?
-                            posts.map(({ id, title, content }) =>
+                            posts.map(({ id, title, content, _embedded, _links }) =>
                                 <News
                                     key={id}
+                                    id={id}
                                     title={title}
                                     content={content}
                                     className={classnames['blog__news']}
+                                    _embedded={_embedded}
+                                    _links={_links}
                                 />
                             ) :
                             <h1 className={classnames['blog__title--not']}>
                                 Нет записей
-                            </h1>}
+                            </h1>
+                        }
                     </div>
                     {!posts && posts.length < 1 && <Button text='Смотреть еще' className={classnames['blog__more-btn']} />}
                 </div>
@@ -35,8 +39,8 @@ const Blog = ({ posts }) => {
 }
 
 export async function getStaticProps() {
-    const posts = await WordPressApi.posts().then(response => response).catch(err => err);
-    console.log(posts)
+    // embed - вложенная данные
+    const posts = await WordPressApi.posts().embed().then(response => response).catch(err => err);
     if (!posts) {
         return {
             notFound: true,

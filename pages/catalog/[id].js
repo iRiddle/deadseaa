@@ -9,7 +9,7 @@ import Button from '../../components/Button'
 
 import NotificationHOC from '../../HOCS/NotificationHOC'
 
-import fabricStorage from '../../hooks/fabricStorage'
+import fabricStorage from '../../helpers/fabricStorage'
 
 import WooCommerceApi from '../../services/WooCommerceService'
 

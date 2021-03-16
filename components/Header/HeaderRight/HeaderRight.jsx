@@ -12,7 +12,7 @@ const HeaderRight = ({
 }) => {
     return (
         <>
-            <div className={classnames['header__search']}>
+            {/* <div className={classnames['header__search']}>
                 <input id='search-input' className={classnames['header__input']} type="search" />
                 <label htmlFor="search-input">
                     <Image
@@ -22,7 +22,7 @@ const HeaderRight = ({
                         height={18}
                     />
                 </label>
-            </div>
+            </div> */}
             <Link href='/profile'>
                 <a className={classnames['header__lk']}
                     onMouseEnter={handleMouseEnterLogin}
