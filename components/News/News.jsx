@@ -4,14 +4,14 @@ import cn from 'classnames'
 
 import classnames from './News.module.scss'
 
-const News = ({ className, title = 'Статья 1', description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' }) => (
+const News = ({ className, title, content }) => (
     <article className={cn(classnames['news'], className)}>
         <div className={classnames['news__description']}>
             <div className={classnames['news__container']}>
                 <h2 className={classnames['news__title']}>
-                    {title}
+                    {title.rendered}
                 </h2>
-                <p>{description}</p>
+                <p dangerouslySetInnerHTML={{ __html: content && content.rendered ? content.rendered : 'Нет описания' }} />
                 <Link href='/'>
                     <a className={classnames['news__arrow']}>
                         <Image
