@@ -7,12 +7,12 @@ import Product from '../../components/Product'
 
 import NotificationHOC from '../../HOCS/NotificationHOC'
 
-import { useSetToStorage } from './hooks/useSetToStorage'
+import fabricStorage from '../../helpers/fabricStorage'
 
-import { getEnvironment } from '../../config'
+import WooCommerceApi from '../../services/WooCommerceService'
 
 const Catalog = ({ products, categories, createNotification }) => {
-    const { setToStorage } = useSetToStorage(createNotification)
+    const { setToStorage } = fabricStorage(createNotification)
 
     const handleSetToStorage = (id) => {
         const product = products.filter((product) => product.id === id)[0];
@@ -45,10 +45,9 @@ const Catalog = ({ products, categories, createNotification }) => {
     )
 }
 
-export async function getStaticProps() {
-    const environment = getEnvironment()
-    const products = await fetch(`${environment}/getProducts`).then((res) => res.json())
-    const categories = await fetch(`${environment}/getCategories`).then((res) => res.json())
+export async function getServerSideProps() {
+    const products = await WooCommerceApi.get('products').then(response => response.data).catch(err => err)
+    const categories = await WooCommerceApi.get(`products/categories`).then(response => response.data).catch(err => err)
 
     if (!products && !categories) {
         return {

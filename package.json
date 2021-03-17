@@ -5,7 +5,7 @@
   "scripts": {
     "build": "next build",
     "start": "next start",
-    "dev": "node server.js"
+    "dev": "next dev"
   },
   "dependencies": {
     "@woocommerce/woocommerce-rest-api": "^1.0.1",

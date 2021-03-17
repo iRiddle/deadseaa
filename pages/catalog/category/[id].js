@@ -6,12 +6,12 @@ import Product from '../../../components/Product'
 
 import NotificationHOC from '../../../HOCS/NotificationHOC'
 
-import { useSetToStorage } from '../hooks/useSetToStorage'
+import fabricStorage from '../../../helpers/fabricStorage'
 
-import { getEnvironment } from '../../../config'
+import WooCommerceApi from '../../../services/WooCommerceService'
 
 const Category = ({ products, categories, createNotification }) => {
-    const { setToStorage } = useSetToStorage(createNotification)
+    const { setToStorage } = fabricStorage(createNotification)
 
     const handleSetToStorage = (id) => {
         const product = products.filter((product) => product.id === id)[0]
@@ -36,11 +36,11 @@ const Category = ({ products, categories, createNotification }) => {
     )
 }
 
-export async function getStaticProps({ params }) {
-    const environment = getEnvironment()
-    const products = await fetch(`${environment}/getProductsByCategory/${params.id}`).then((res) => res.json())
-    const categories = await fetch(`${environment}/getCategories`).then((res) => res.json())
-
+export async function getServerSideProps({ params }) {
+    const products = await WooCommerceApi.get(`products`, { category: params.id }).then(response => response.data).catch(err => err)
+    const categories = await WooCommerceApi.get(`products/categories`).then(response => response.data).catch(err => err)
+    console.log('safkasjf')
+    console.log('fasjfajsf')
     if (!products) {
         return {
             notFound: true,
@@ -55,15 +55,14 @@ export async function getStaticProps({ params }) {
     }
 }
 
-export async function getStaticPaths() {
-    const environment = getEnvironment()
-    const categories = await fetch(`${environment}/getCategories`).then((res) => res.json())
+// export async function getStaticPaths() {
+//     const categories = await WooCommerceApi.get(`products/categories`).then(response => response.data).catch(err => err)
 
-    const paths = categories.map((category) => ({
-        params: { id: category.id.toString() },
-    }))
+//     const paths = categories.map((category) => ({
+//         params: { id: category.id.toString() },
+//     }))
 
-    return { paths, fallback: false }
-}
+//     return { paths, fallback: false }
+// }
 
 export default NotificationHOC(Category)

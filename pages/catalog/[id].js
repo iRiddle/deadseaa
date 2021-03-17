@@ -9,15 +9,15 @@ import Button from '../../components/Button'
 
 import NotificationHOC from '../../HOCS/NotificationHOC'
 
-import { useSetToStorage } from './hooks/useSetToStorage'
+import fabricStorage from '../../helpers/fabricStorage'
 
-import { getEnvironment } from '../../config'
+import WooCommerceApi from '../../services/WooCommerceService'
 
 import classnames from './DetailedProduct.module.scss'
 
 const DetailedProduct = ({ createNotification, product, categories }) => {
     const [productDetailed, setDetailProduct] = useState({ ...product, count: 0 } || {})
-    const { setToStorage } = useSetToStorage(createNotification)
+    const { setToStorage } = fabricStorage(createNotification)
 
     const handleIncrease = () => {
         setDetailProduct({ ...productDetailed, count: productDetailed.count + 1 })
@@ -76,10 +76,9 @@ const DetailedProduct = ({ createNotification, product, categories }) => {
     )
 }
 
-export async function getStaticProps({ params }) {
-    const environment = getEnvironment()
-    const product = await fetch(`${environment}/getProducts/${params.id}`).then((res) => res.json())
-    const categories = await fetch(`${environment}/getCategories`).then((res) => res.json())
+export async function getServerSideProps({ params }) {
+    const product = await WooCommerceApi.get(`products/${params.id}`).then(response => response.data).catch(err => err)
+    const categories = await WooCommerceApi.get(`products/categories`).then(response => response.data).catch(err => err)
 
     if (!product) {
         return {
@@ -95,15 +94,16 @@ export async function getStaticProps({ params }) {
     }
 }
 
-export async function getStaticPaths() {
-    const environment = getEnvironment()
-    const products = await fetch(`${environment}/getProducts`).then((res) => res.json())
+// ПОКА НЕ УДАЛЯТЬ
 
-    const paths = products.map((product) => ({
-        params: { id: product.id.toString() },
-    }))
+// export async function getStaticPaths() {
+//     const products = await WooCommerceApi.get('products').then(response => response.data).catch(err => err)
 
-    return { paths, fallback: false }
-}
+//     const paths = products.map((product) => ({
+//         params: { id: product.id.toString() },
+//     }))
+
+//     return { paths, fallback: false }
+// }
 
 export default NotificationHOC(DetailedProduct)
