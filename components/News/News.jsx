@@ -4,10 +4,12 @@ import cn from 'classnames'
 
 import { substrContent } from '../../helpers/substr'
 
+import { IMAGE_PLACEHOLDER } from '../../constants'
+
 import classnames from './News.module.scss'
 
 const News = ({ id, className, title, content, _embedded }) => {
-    const img = _embedded['wp:featuredmedia'][0].source_url;
+    const img = _embedded['wp:featuredmedia'] ? _embedded['wp:featuredmedia'][0].source_url : IMAGE_PLACEHOLDER;
     return (
         <article className={cn(classnames['news'], className)} style={{ backgroundImage: `url(${img})` }}>
             <div className={classnames['news__description']}>

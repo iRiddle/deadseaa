@@ -4,11 +4,11 @@ import MainLayout from '../../layouts/MainLayout'
 
 import WordPressApi from '../../services/WordPressService'
 
-const BlogPost = ({ post }) => {
-    console.log(post)
+import { IMAGE_PLACEHOLDER } from '../../constants'
 
+const BlogPost = ({ post }) => {
     const { title, content, _embedded } = post
-    const img = _embedded['wp:featuredmedia'][0].source_url;
+    const img = _embedded['wp:featuredmedia'] ? _embedded['wp:featuredmedia'][0].source_url : IMAGE_PLACEHOLDER;
 
     return (
         <MainLayout>
@@ -28,7 +28,7 @@ const BlogPost = ({ post }) => {
     )
 }
 
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
     const post = await WordPressApi.posts().embed().id(params.id).then(response => response).catch(err => err)
 
     if (!post) {
@@ -44,14 +44,14 @@ export async function getStaticProps({ params }) {
     }
 }
 
-export async function getStaticPaths() {
-    const posts = await WordPressApi.posts().then(response => response).catch(err => err)
+// export async function getStaticPaths() {
+//     const posts = await WordPressApi.posts().then(response => response).catch(err => err)
 
-    const paths = posts.map((product) => ({
-        params: { id: product.id.toString() },
-    }))
+//     const paths = posts.map((product) => ({
+//         params: { id: product.id.toString() },
+//     }))
 
-    return { paths, fallback: false }
-}
+//     return { paths, fallback: false }
+// }
 
 export default BlogPost

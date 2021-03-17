@@ -38,7 +38,7 @@ const Blog = ({ posts }) => {
     )
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
     // embed - вложенная данные
     const posts = await WordPressApi.posts().embed().then(response => response).catch(err => err);
     if (!posts) {

@@ -36,7 +36,7 @@ const Category = ({ products, categories, createNotification }) => {
     )
 }
 
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
     const products = await WooCommerceApi.get(`products`, { category: params.id }).then(response => response.data).catch(err => err)
     const categories = await WooCommerceApi.get(`products/categories`).then(response => response.data).catch(err => err)
 
@@ -54,14 +54,14 @@ export async function getStaticProps({ params }) {
     }
 }
 
-export async function getStaticPaths() {
-    const categories = await WooCommerceApi.get(`products/categories`).then(response => response.data).catch(err => err)
+// export async function getStaticPaths() {
+//     const categories = await WooCommerceApi.get(`products/categories`).then(response => response.data).catch(err => err)
 
-    const paths = categories.map((category) => ({
-        params: { id: category.id.toString() },
-    }))
+//     const paths = categories.map((category) => ({
+//         params: { id: category.id.toString() },
+//     }))
 
-    return { paths, fallback: false }
-}
+//     return { paths, fallback: false }
+// }
 
 export default NotificationHOC(Category)

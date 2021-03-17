@@ -45,7 +45,7 @@ const Catalog = ({ products, categories, createNotification }) => {
     )
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
     const products = await WooCommerceApi.get('products').then(response => response.data).catch(err => err)
     const categories = await WooCommerceApi.get(`products/categories`).then(response => response.data).catch(err => err)
 
