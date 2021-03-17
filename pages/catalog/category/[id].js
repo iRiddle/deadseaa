@@ -39,7 +39,7 @@ const Category = ({ products, categories, createNotification }) => {
 export async function getServerSideProps({ params }) {
     const products = await WooCommerceApi.get(`products`, { category: params.id }).then(response => response.data).catch(err => err)
     const categories = await WooCommerceApi.get(`products/categories`).then(response => response.data).catch(err => err)
-
+    console.log('safkasjf')
     if (!products) {
         return {
             notFound: true,
