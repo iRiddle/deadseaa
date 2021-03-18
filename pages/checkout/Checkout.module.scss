@@ -20,18 +20,22 @@ $cambria: 'Cambria', sans-serif;
 	padding-left: 7px;
 }
 
+.main--checkout {
+	background-color: #EAF6ED;
+}
+
 .checkout {
 	display: flex;
 	background-color: #EAF6ED;
-	padding: 35px 45px;
+	padding: 35px 45px 35px 10px;
 	flex-wrap: wrap;
 
 	@media (max-width: 1200px) {
-		padding: 35px 28px 35px 45px;
+		padding: 35px 28px 35px 0;
 	}
 
 	@media (max-width: 768px) {
-		padding: 35px 28px 35px 32px;
+		padding: 35px 28px 35px 0;
 	}
 }
 
@@ -230,6 +234,12 @@ $cambria: 'Cambria', sans-serif;
 		display: flex;
 		align-items: center;
 		margin-top: 16px;
+
+		@media (max-width: 700px) {
+			flex-wrap: wrap;
+			flex-direction: column-reverse;
+			align-items: flex-start;
+		}
 	}
 
 	&__agreement {
@@ -237,6 +247,10 @@ $cambria: 'Cambria', sans-serif;
 		font-style: normal;
 		font-weight: normal;
 		font-size: 15px;
+
+		@media (max-width: 700px) {
+			margin-bottom: 10px;
+		}
 	}
 
 	&__link {

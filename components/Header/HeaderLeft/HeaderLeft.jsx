@@ -1,12 +1,20 @@
+import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 
 import Logo from '../../Logo'
 import Button from '../../Button'
+import AdaptiveNavigation from '../../AdaptiveNavigation'
 
 import classnames from '../Header.module.scss'
 
 const HeaderLeft = () => {
+    const [mainVisible, setMainVisible] = useState(false);
+
+    const handleMainVisible = () => {
+        setMainVisible(!mainVisible);
+    }
+
     return (
         <>
             <Button
@@ -18,9 +26,12 @@ const HeaderLeft = () => {
                         height={18}
                     />
                 }
-                className={classnames['header__burger']}
+                className={`${classnames['header__burger']} 
+                ${mainVisible && classnames['header__burger--mirrored']}`}
                 notContainer
+                onClick={handleMainVisible}
             />
+            <AdaptiveNavigation show={mainVisible}/>
             <Logo className={classnames['header__logo']} />
             <nav className={classnames['header__navigation']}>
                 <ul className={classnames['header__list-links']}>
