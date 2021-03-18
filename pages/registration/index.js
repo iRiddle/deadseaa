@@ -1,25 +1,57 @@
+import { useState } from 'react'
+
 import MainLayout from '../../layouts/MainLayout'
 import Button from '../../components/Button'
+import NotificationHOC from '../../HOCS/NotificationHOC'
+
+import WooCommerceApi from '../../services/WooCommerceService'
+import { WordPressCustomApi } from '../../services/WordPressService'
+
+import { setDataToLocal } from '../../storage'
+
+import { getMessage } from '../../messages'
 
 import classnames from './Registration.module.scss'
 
-const Registration = () => {
-    const test = async () => {
-        const testObj = {
-            username: 'zxvzxvzxv',
-            email: 'xcbxcb@ya.ru',
-            password: 'qwerty12345'
+const Registration = ({ createNotification }) => {
+    const [username, setUsername] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
+    const registerUser = async () => {
+        const body = {
+            username,
+            password,
+            email,
         }
 
-        const data = await fetch(`http://localhost:3000/registerUser/`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(testObj)
-        }).then((response) => response.json())
+        if (!isEmptyFields()) return createNotification('error', 'Одно или несколько полей не заполнены', "Ошибка")
 
-        console.log(data)
+        const response = await WooCommerceApi.post('customers', body).then(response => response.data).catch(err => err)
+        const session = await WordPressCustomApi('/jwt-auth/v1/token', 'POST', { username, password })
+        const userStorage = { userId: response.id, session: session.data.token }
+
+        setDataToLocal('session-cosmetic-token', userStorage)
+    }
+
+    const handleUsername = (e) => {
+        const value = e.target.value
+        setUsername(value)
+    }
+
+    const handleEmail = (e) => {
+        const value = e.target.value
+        setEmail(value)
+    }
+
+    const handlePasssword = (e) => {
+        const value = e.target.value
+        setPassword(value)
+    }
+
+    const isEmptyFields = () => {
+        const fields = [username, email, password]
+        return fields.every(field => field.length > 5)
     }
 
     return (
@@ -30,17 +62,17 @@ const Registration = () => {
                         <h1>Регистрация</h1>
                         <label className={classnames['registration__input']}>
                             <span className={classnames['registration__legend']}>Логин</span>
-                            <input type='text' placeholder='Введите логин' />
+                            <input type='text' placeholder='Введите логин' value={username} onChange={handleUsername} />
                         </label>
                         <label className={classnames['registration__input']}>
                             <span className={classnames['registration__legend']}>E-mail</span>
-                            <input type='email' placeholder='Введите e-mail' />
+                            <input type='email' placeholder='Введите e-mail' value={email} onChange={handleEmail} />
                         </label>
                         <label className={classnames['registration__input']}>
                             <span className={classnames['registration__legend']}>Пароль</span>
-                            <input type='password' placeholder='Введите пароль' />
+                            <input type='password' placeholder='Введите пароль' value={password} onChange={handlePasssword} />
                         </label>
-                        <Button text='Регистрация' className={classnames['registration__btn']} onClick={test} />
+                        <Button text='Регистрация' className={classnames['registration__btn']} onClick={registerUser} />
                     </div>
                 </div>
             </div>
@@ -48,4 +80,4 @@ const Registration = () => {
     )
 }
 
-export default Registration
+export default NotificationHOC(Registration)
