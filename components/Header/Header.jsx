@@ -9,7 +9,7 @@ import Login from '../Login'
 
 import classnames from './Header.module.scss'
 
-const Header = ({ headerIsSalad }) => {
+const Header = ({ headerIsSalad, isLoadingUser }) => {
     const [search, setSearch] = useState(false)
     const [hovered, setHover] = useState(false)
 
