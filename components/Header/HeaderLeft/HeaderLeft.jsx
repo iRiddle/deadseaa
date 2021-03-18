@@ -31,7 +31,7 @@ const HeaderLeft = () => {
                 notContainer
                 onClick={handleMainVisible}
             />
-            <AdaptiveNavigation show={mainVisible}/>
+            <AdaptiveNavigation show={mainVisible} closeMenu={handleMainVisible}/>
             <Logo className={classnames['header__logo']} />
             <nav className={classnames['header__navigation']}>
                 <ul className={classnames['header__list-links']}>
