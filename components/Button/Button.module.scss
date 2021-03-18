@@ -4,6 +4,7 @@
     color: #fff;
     border-radius: 3px;
     transition: 0.4s;
+    z-index: 3;
 
     &__container {
         display: flex;
@@ -20,7 +21,6 @@
     }
 
     &:hover {
-        transform: scale(1.1);
         transition: 0.4s;
     }
 

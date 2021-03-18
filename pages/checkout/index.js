@@ -3,7 +3,7 @@ import classnames from './Checkout.module.scss'
 
 const Checkout = () => {
 	return (
-		<MainLayout>
+		<MainLayout className={classnames['main--checkout']}>
 			<div className={classnames['checkout']}>
 				<div className={classnames['checkout__customer-data']}>
 					<h1 className={classnames['checkout__header']}>Оформление заказа</h1>
