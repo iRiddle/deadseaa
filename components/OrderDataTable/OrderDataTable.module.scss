@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300&display=swap');
+
+.order {
+    &__header {
+        font-family: 'Merriweather', sans-serif;
+		font-weight: 600;
+		font-size: 20px;
+		line-height: 23px;
+		margin-bottom: 40px;
+    }
+
+    &__table-container {
+        max-width: 445px;
+        box-sizing: border-box;
+        border: 1px dashed #8ECAC7;
+        border-radius: 15px;
+
+        @media (max-width: 1200px) {
+            max-width: 403px;
+        }
+    }
+
+    &__table {
+        table-layout: fixed;
+        border-collapse: collapse;
+        width: 100%;
+        overflow: hidden;
+    }
+
+    &__table-head {
+        background-color: #28A69E;
+        font-family: Cambria;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 15px;
+        line-height: 20px;
+        color: #FFFFFF;
+    }
+
+    &__column-left{
+        border-radius: 14px 0 0 0;
+        border-right: 1px solid #28A69E;
+        width: 60%;
+        height: 56px;
+        text-align: start;
+        padding-left: 25px;
+    }
+
+    &__column-right{
+        border-radius: 0 14px 0 0;
+        border-left: 1px solid #28A69E;
+        width: 40%;
+        text-align: start;
+    }
+
+    &__tr--white {
+        background-color: rgba(255, 255, 255, 0.5);
+    }
+
+    &__td {
+        padding-left: 25px;
+        height: 54px;
+        font-family: Cambria;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+    }
+
+    &__count {
+        margin-left: auto;
+        margin-right: 20px;
+        font-weight: 600;
+    }
+
+    &__subtotal-str {
+        padding-left: 25px;
+        font-family: Cambria;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 15px;
+        height: 54px;
+    }
+
+    &__price {
+        font-family: Cambria;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 13px;
+    }
+}
