@@ -6,12 +6,17 @@ import HeaderLeft from './HeaderLeft'
 import HeaderRight from './HeaderRight'
 
 import Login from '../Login'
+import Lk from '../Lk'
+
+import { getDataFromLocal } from '../../storage'
 
 import classnames from './Header.module.scss'
 
-const Header = ({ headerIsSalad, isLoadingUser }) => {
+const Header = ({ headerIsSalad, isLoadingUser, user }) => {
     const [search, setSearch] = useState(false)
     const [hovered, setHover] = useState(false)
+
+    const userSession = getDataFromLocal('session-cosmetic-token')
 
     const handleSearch = () => {
         setSearch(!search)
@@ -55,11 +60,21 @@ const Header = ({ headerIsSalad, isLoadingUser }) => {
                         </div>
                     </div>
                 )}
-                <Login
-                    hovered={hovered}
-                    handleMouseEnterLogin={handleMouseEnterLogin}
-                    handleMouseLeaveLogin={handleMouseLeaveLogin}
-                />
+                {userSession && userSession.session ? (
+                    <Lk
+                        hovered={hovered}
+                        user={user}
+                        isLoadingUser={isLoadingUser}
+                        handleMouseEnterLogin={handleMouseEnterLogin}
+                        handleMouseLeaveLogin={handleMouseLeaveLogin}
+                    />
+                ) : (
+                        <Login
+                            hovered={hovered}
+                            handleMouseEnterLogin={handleMouseEnterLogin}
+                            handleMouseLeaveLogin={handleMouseLeaveLogin}
+                        />
+                    )}
             </div>
         </header>
     )

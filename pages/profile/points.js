@@ -3,9 +3,11 @@ import ProfileLayout from '../../layouts/ProfileLayout'
 
 import Table from '../../components/Table'
 
+import AuthHOC from '../../HOCS/AuthHOC'
+
 import classnames from './Profile.module.scss'
 
-const points = () => {
+const Points = () => {
     return (
         <MainLayout>
             <ProfileLayout>
@@ -15,4 +17,4 @@ const points = () => {
     )
 }
 
-export default points
+export default AuthHOC(Points)

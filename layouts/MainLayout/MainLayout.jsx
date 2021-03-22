@@ -12,6 +12,7 @@ import classnames from './MainLayout.module.scss'
 
 const MainLayout = ({ children, headerIsSalad = false, className }) => {
     const [isLoadingUser, setLoadingUser] = useState(false)
+    const [user, setUser] = useState({})
 
     useEffect(async () => {
         await getUserInfo()
@@ -20,15 +21,15 @@ const MainLayout = ({ children, headerIsSalad = false, className }) => {
     const getUserInfo = async () => {
         setLoadingUser(true)
         const sessionData = await getDataFromLocal('session-cosmetic-token')
-        if (!sessionData.session && sessionData.session.length < 1) return
+        if (!sessionData || !sessionData.session || sessionData.session.length < 1) return
         const user = await WooCommerceApi.get(`customers/${sessionData.userId}`).then(response => response.data).catch(err => err)
-        setDataToLocal('user-cosmetic-data', user)
+        setUser(user)
         setLoadingUser(false)
     }
 
     return (
         <div className={classnames['page-container']}>
-            <Header headerIsSalad={headerIsSalad} isLoadingUser={isLoadingUser} />
+            <Header headerIsSalad={headerIsSalad} isLoadingUser={isLoadingUser} user={user} />
             <div className={classnames['page-container__content-wrap']}>
                 <main className={cn(classnames['main'], className)}>
                     <div className={classnames['main__container']}>

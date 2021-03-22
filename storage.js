@@ -10,3 +10,10 @@ export const getDataFromLocal = key => {
         return JSON.parse(data)
     }
 }
+
+
+export const removeDataFromLocal = key => {
+    if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+        return localStorage.removeItem(key)
+    }
+}

@@ -1,8 +1,19 @@
+import { useRouter } from 'next/router'
+
 import ActiveLink from '../../components/ActiveLink'
+
+import { removeDataFromLocal } from '../../storage'
 
 import classnames from './ProfileLayout.module.scss'
 
 const ProfileLayout = ({ children }) => {
+    const router = useRouter()
+
+    const logout = () => {
+        removeDataFromLocal('session-cosmetic-token');
+        router.push('/')
+    }
+
     return (
         <div className={classnames['profile-layout']}>
             <div className={classnames['profile-layout__container']}>
@@ -30,7 +41,7 @@ const ProfileLayout = ({ children }) => {
                             </ActiveLink>
                         </li>
                         <li className={classnames['profile-layout__link']}>
-                            <button className = {classnames['profile-layout__exit']}>Выйти</button>
+                            <button className={classnames['profile-layout__exit']} onClick={logout}>Выйти</button>
                         </li>
                     </ul>
                 </nav>

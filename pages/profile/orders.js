@@ -3,9 +3,11 @@ import ProfileLayout from '../../layouts/ProfileLayout'
 
 import Table from '../../components/Table'
 
+import AuthHOC from '../../HOCS/AuthHOC'
+
 import classnames from './Profile.module.scss'
 
-const orders = () => {
+const Orders = () => {
     return (
         <MainLayout>
             <ProfileLayout>
@@ -15,4 +17,4 @@ const orders = () => {
     )
 }
 
-export default orders
+export default AuthHOC(Orders)

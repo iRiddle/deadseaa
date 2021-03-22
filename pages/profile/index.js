@@ -3,6 +3,8 @@ import ProfileLayout from '../../layouts/ProfileLayout'
 
 import Table from '../../components/Table'
 
+import AuthHOC from '../../HOCS/AuthHOC'
+
 const Profile = () => {
     return (
         <MainLayout>
@@ -13,4 +15,4 @@ const Profile = () => {
     )
 }
 
-export default Profile
+export default AuthHOC(Profile)

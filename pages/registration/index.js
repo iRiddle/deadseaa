@@ -9,8 +9,6 @@ import { WordPressCustomApi } from '../../services/WordPressService'
 
 import { setDataToLocal } from '../../storage'
 
-import { getMessage } from '../../messages'
-
 import classnames from './Registration.module.scss'
 
 const Registration = ({ createNotification }) => {
