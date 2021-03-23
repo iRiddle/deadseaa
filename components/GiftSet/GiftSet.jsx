@@ -12,7 +12,7 @@ const GiftSet = () => {
                 <button className={classnames['present__button']}>ЗАКАЗАТЬ</button>
             </div>
             <div className={classnames['present__img--container']}>
-            <img src="/_next/static/media/present.png" className={classnames['present__img']}/>
+            <img src="../../static/content/present.png" className={classnames['present__img']}/>
             </div>
         </div>
     )
