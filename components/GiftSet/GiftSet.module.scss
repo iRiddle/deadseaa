@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap');
+
+.present {
+    display: flex;
+    background-color: #EAF6ED;
+    max-height: 480px;
+    align-items: center;
+
+    @media(max-width: 796px) {
+        max-height: 402px;
+    }
+
+    &__container {
+        margin: 94px 10px auto 110px;
+
+        @media(max-width: 992px) {
+            margin: 94px 10px auto 32px;
+        }
+
+        @media(max-width: 796px) {
+            margin: 56px 10px auto 32px;
+        }
+    }
+
+    &__header {
+        font-family: Playfair Display;
+        font-size: 32px;
+        letter-spacing: 1px;
+        margin-bottom: 53px;
+    }
+
+    &__paragraph {
+        font-family: Cambria;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 17px;
+        margin-bottom: 84px;
+        min-width: 280px;
+
+        @media(max-width: 450px) {
+            margin-bottom: 30px;
+        }
+    }
+
+    &__button {
+        width: 190px;
+        height: 55px;
+        background: #8ECAC7;
+        border-radius: 3px;
+        font-family: Montserrat;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 13px;
+        letter-spacing: 1px;
+        color: #FFFFFF;
+    }
+
+    &__img--container {
+        height:523px;
+        overflow: visible;
+        z-index: 5;
+        margin-right: 136px;
+
+        @media(max-width: 992px) {
+            margin-right: 65px;
+        }
+
+        @media(max-width: 796px) {
+            height: 420px;
+            margin-right: 42px;
+        }
+
+        @media(max-width: 796px) {
+            margin-right: auto;
+            overflow-x: hidden;
+        }
+    }
+
+    &__img {
+        @media(max-width: 796px) {
+            height: 420px;
+        }
+    }
+}
