@@ -3,6 +3,7 @@ import Head from 'next/head'
 import MainLayout from '../layouts/MainLayout'
 import Contact from '../components/Contact'
 import GiftSet from '../components/GiftSet'
+import Offers from '../components/Offers'
 
 const Index = () => {
     return (
@@ -12,6 +13,7 @@ const Index = () => {
             </Head>
             <MainLayout>
                 <GiftSet />
+                <Offers />
                 <Contact />
             </MainLayout>
         </>
