@@ -1,10 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap');
-
-$cambria: 'Cambria', sans-serif;
 
 %text-data {
-	font-family: $cambria;
 	font-style: normal;
 	font-weight: normal;
 	font-size: 15px;
@@ -48,7 +43,6 @@ $cambria: 'Cambria', sans-serif;
 	}
 
 	&__header {
-		font-family: 'Merriweather', sans-serif;
 		font-weight: 600;
 		font-size: 20px;
 		line-height: 23px;
@@ -61,7 +55,6 @@ $cambria: 'Cambria', sans-serif;
 	}
 
 	&__span {
-		font-family: $cambria;
 		font-weight: 700;
 		font-style: normal;
 		font-size: 15px;
@@ -105,7 +98,6 @@ $cambria: 'Cambria', sans-serif;
 	}
 
 	&__label {
-		font-family: $cambria;
 		font-weight: 400;
 		font-style: normal;
 		font-size: 15px;
@@ -159,7 +151,6 @@ $cambria: 'Cambria', sans-serif;
 		background: #28A69E;
 		border-radius: 3px;
 		color: #FFFFFF;
-		font-family: Montserrat;
 		font-style: normal;
 		font-weight: 600;
 		font-size: 13px;
@@ -181,7 +172,6 @@ $cambria: 'Cambria', sans-serif;
 	}
 
 	&__agreement {
-		font-family: Cambria;
 		font-style: normal;
 		font-weight: normal;
 		font-size: 15px;
