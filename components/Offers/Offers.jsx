@@ -34,7 +34,7 @@ const Offers = () => {
                         научные достижения и полагаясь на собственный опыт разработок в 
                         области косметологии.
                     </p>
-                    <span className={classnames['offers__read']}>Читать далее >></span>
+                    <span className={classnames['offers__read']}>Читать далее &#187;</span>
                 </div>
             </div>
             <div className={classnames['offers__container']}>
