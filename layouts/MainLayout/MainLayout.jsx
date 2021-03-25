@@ -6,7 +6,7 @@ import Footer from '../../components/Footer'
 
 import WooCommerceApi from '../../services/WooCommerceService'
 
-import { getDataFromLocal, setDataToLocal } from '../../storage'
+import { getDataFromLocal } from '../../storage'
 
 import classnames from './MainLayout.module.scss'
 

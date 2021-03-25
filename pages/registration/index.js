@@ -1,7 +1,9 @@
 import { useState } from 'react'
+import { useRouter } from 'next/router'
 
 import MainLayout from '../../layouts/MainLayout'
 import Button from '../../components/Button'
+import AuthHOC from '../../HOCS/AuthHOC'
 import NotificationHOC from '../../HOCS/NotificationHOC'
 
 import WooCommerceApi from '../../services/WooCommerceService'
@@ -15,8 +17,12 @@ const Registration = ({ createNotification }) => {
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [isLoading, setLoading] = useState(false)
+
+    const router = useRouter()
 
     const registerUser = async () => {
+        setLoading(true)
         const body = {
             username,
             password,
@@ -30,6 +36,9 @@ const Registration = ({ createNotification }) => {
         const userStorage = { userId: response.id, session: session.data.token }
 
         setDataToLocal('session-cosmetic-token', userStorage)
+        router.push('/profile')
+        setLoading(false)
+        createNotification('ok', 'Регистрация прошла успешно', "Уведомление")
     }
 
     const handleUsername = (e) => {
@@ -70,7 +79,7 @@ const Registration = ({ createNotification }) => {
                             <span className={classnames['registration__legend']}>Пароль</span>
                             <input type='password' placeholder='Введите пароль' value={password} onChange={handlePasssword} />
                         </label>
-                        <Button text='Регистрация' className={classnames['registration__btn']} onClick={registerUser} />
+                        <Button text='Регистрация' isLoading={isLoading} className={classnames['registration__btn']} onClick={registerUser} />
                     </div>
                 </div>
             </div>
@@ -78,4 +87,4 @@ const Registration = ({ createNotification }) => {
     )
 }
 
-export default NotificationHOC(Registration)
+export default AuthHOC(NotificationHOC(Registration))

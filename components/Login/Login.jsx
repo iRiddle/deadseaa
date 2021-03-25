@@ -7,8 +7,14 @@ import classnames from './Login.module.scss'
 
 const Login = ({
     hovered,
+    username,
+    password,
+    isLoading,
+    handleUsername,
+    handlePasssword,
     handleMouseEnterLogin,
-    handleMouseLeaveLogin
+    handleMouseLeaveLogin,
+    login
 }) => {
     return (
         <div
@@ -20,13 +26,13 @@ const Login = ({
                 <div className={classnames['login__inputs']}>
                     <label className={classnames['login__input']}>
                         <span className={classnames['login__legend']}>Логин:</span>
-                        <input type="text" placeholder='Введите логин' />
+                        <input type="text" value={username} onChange={handleUsername} placeholder='Введите логин' />
                     </label>
                     <label className={classnames['login__input']}>
                         <span className={classnames['login__legend']}>Пароль:</span>
-                        <input type="password" placeholder='Введите парль' />
+                        <input type="password" value={password} onChange={handlePasssword} placeholder='Введите пароль' />
                     </label>
-                    <Button text='Войти' className={classnames['login__btn']} />
+                    <Button text='Войти' onClick={login} isLoading={isLoading} className={classnames['login__btn']} />
                 </div>
                 <div className={classnames['login__links']}>
                     <Link href="/registration">
