@@ -8,10 +8,9 @@ import WordPressApi from '../../services/WordPressService'
 import classnames from './Blog.module.scss'
 
 const Blog = ({ posts }) => {
-    console.log(posts)
     return (
         <MainLayout headerIsSalad={true}>
-            <div className={classnames['blog']}>
+            <section className={classnames['blog']}>
                 <div className={classnames['blog__container']}>
                     <div className={classnames['blog__news-container']}>
                         {posts && posts.length > 0 ?
@@ -33,13 +32,12 @@ const Blog = ({ posts }) => {
                     </div>
                     {!posts && posts.length < 1 && <Button text='Смотреть еще' className={classnames['blog__more-btn']} />}
                 </div>
-            </div>
+            </section>
         </MainLayout>
     )
 }
 
 export async function getServerSideProps() {
-    // embed - вложенная данные
     const posts = await WordPressApi.posts().embed().then(response => response).catch(err => err);
     if (!posts) {
         return {

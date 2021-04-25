@@ -13,7 +13,7 @@ const Breadcrumbs = ({ breadcrumbs, className }) => (
                 </Link>
             </li>
         /
-        {breadcrumbs.map(({ id, href, name }, index, arr) =>
+        {breadcrumbs.map(({ id, href, name }, index, arr) => (
                 <Fragment key={id}>
                     <li className={classnames['breadcrumbs__link']}>
                         <Link href={href}>
@@ -22,7 +22,7 @@ const Breadcrumbs = ({ breadcrumbs, className }) => (
                     </li>
                     {arr.length !== index + 1 && '/'}
                 </Fragment>
-            )}
+            ))}
         </div>
     </ul>
 )

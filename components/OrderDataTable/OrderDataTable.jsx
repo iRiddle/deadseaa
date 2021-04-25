@@ -3,8 +3,6 @@ import { getDataFromLocal } from '../../storage'
 import classnames from './OrderDataTable.module.scss'
 
 const OrderDataTable = () => {
-    console.log(getDataFromLocal('phylosophyProducts'))
-
     const orders = getDataFromLocal('phylosophyProducts');
 
     const totalPrice = orders && orders.reduce((accumulator, currentValue) => {

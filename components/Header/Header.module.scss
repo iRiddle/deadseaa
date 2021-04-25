@@ -112,7 +112,10 @@
         transition: 0.4s;
     }
 
-    &__lk,
+    &__lk {
+        cursor: pointer;
+    }
+
     &__basket {
         margin-left: 20px;
         transition: 0.4s;

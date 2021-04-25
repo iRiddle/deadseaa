@@ -39,6 +39,16 @@ ul {
   padding: 0;
 }
 
+img {
+  max-height: 450px;
+  max-width: 450px !important;
+}
+
+#nprogress .bar {
+  background: #8ECAC7 !important;
+  height: 4px !important;
+}
+
 * {
   box-sizing: border-box;
 }

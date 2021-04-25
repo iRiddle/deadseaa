@@ -1,11 +1,13 @@
 import Head from 'next/head'
 
+import AuthHOC from '../HOCS/AuthHOC'
+
 import MainLayout from '../layouts/MainLayout'
 import Contact from '../components/Contact'
 import GiftSet from '../components/GiftSet'
 import Offers from '../components/Offers'
 
-const Index = () => {
+const MainPage = () => {
     return (
         <>
             <Head>
@@ -20,4 +22,4 @@ const Index = () => {
     )
 }
 
-export default Index
+export default AuthHOC(MainPage)

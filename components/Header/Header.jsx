@@ -9,21 +9,23 @@ import HeaderRight from './HeaderRight'
 import Login from '../Login'
 import Lk from '../Lk'
 
-import { getDataFromLocal, setDataToLocal } from '../../storage'
+import UserLayout from '../../layouts/UserLayout'
+
+import NotificationHOC from '../../HOCS/NotificationHOC'
+
+import { setDataToLocal } from '../../storage'
 import { WordPressCustomApi } from '../../services/WordPressService'
 
 import classnames from './Header.module.scss'
 
-const Header = ({ headerIsSalad, isLoadingUser, user }) => {
+const Header = ({ headerIsSalad, isLoadingUser, user, createNotification }) => {
     const [search, setSearch] = useState(false)
     const [hovered, setHover] = useState(false)
+    const [isLoadingAuth, setLoadingAuth] = useState(false)
 
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-    const [isLoading, setLoading] = useState(false)
     const router = useRouter()
-
-    const userSession = getDataFromLocal('session-cosmetic-token')
 
     const handleSearch = () => {
         setSearch(!search)
@@ -48,13 +50,17 @@ const Header = ({ headerIsSalad, isLoadingUser, user }) => {
     }
 
     const login = async () => {
-        setLoading(true)
-        if (!isEmptyFields()) return createNotification('error', 'Одно или несколько полей не заполнены', "Ошибка")
-        const session = await WordPressCustomApi('/jwt-auth/v1/token', 'POST', { username, password })
-        const userStorage = { userId: session.data.id, session: session.data.token }
-        router.push('/profile')
-        setDataToLocal('session-cosmetic-token', userStorage)
-        setLoading(false)
+        setLoadingAuth(true);
+        if (!isEmptyFields()) {
+            setLoadingAuth(false)
+            return createNotification('error', 'Одно или несколько полей не заполнены', "Ошибка")
+        };
+
+        const response = await WordPressCustomApi('/jwt-auth/v1/token', 'POST', { username, password });
+        const userStorage = { userId: response.data.id, session: response.data.token };
+        router.push('/profile');
+        setDataToLocal('session-cosmetic-token', userStorage);
+        setLoadingAuth(false);
     }
 
     const isEmptyFields = () => {
@@ -62,6 +68,44 @@ const Header = ({ headerIsSalad, isLoadingUser, user }) => {
         return fields.every(field => field.length > 5)
     }
 
+    const getUserComponent = () => {
+        if (user && Object.keys(user).length > 0) {
+            return (
+                <UserLayout
+                    className={cn(classnames['lk'])}
+                    onMouseEnter={handleMouseEnterLogin}
+                    onMouseLeave={handleMouseLeaveLogin}
+                    hovered={hovered}
+                    isLoading={isLoadingUser} // этот компонент
+                >
+                    <Lk
+                        hovered={hovered}
+                        user={user}
+                    />
+                </UserLayout>
+            )
+        }
+
+        return (
+            <UserLayout
+                className={cn(classnames['login'])}
+                onMouseEnter={handleMouseEnterLogin}
+                onMouseLeave={handleMouseLeaveLogin}
+                isLoading={isLoadingUser}
+                hovered={hovered}
+            >
+                <Login
+                    hovered={hovered}
+                    handleUsername={handleUsername}
+                    handlePasssword={handlePasssword}
+                    login={login}
+                    username={username}
+                    password={password}
+                    isLoadingAuth={isLoadingAuth}
+                />
+            </UserLayout>
+        )
+    }
 
     return (
         <header className={cn(classnames['header'], headerIsSalad && classnames['header--color-salad'])}>
@@ -93,30 +137,10 @@ const Header = ({ headerIsSalad, isLoadingUser, user }) => {
                         </div>
                     </div>
                 )}
-                {userSession && userSession.session ? (
-                    <Lk
-                        hovered={hovered}
-                        user={user}
-                        isLoadingUser={isLoadingUser}
-                        handleMouseEnterLogin={handleMouseEnterLogin}
-                        handleMouseLeaveLogin={handleMouseLeaveLogin}
-                    />
-                ) : (
-                        <Login
-                            hovered={hovered}
-                            handleMouseEnterLogin={handleMouseEnterLogin}
-                            handleMouseLeaveLogin={handleMouseLeaveLogin}
-                            handleUsername={handleUsername}
-                            handlePasssword={handlePasssword}
-                            login={login}
-                            isLoading={isLoading}
-                            username={username}
-                            password={password}
-                        />
-                    )}
+                {getUserComponent()}
             </div>
         </header>
     )
 }
 
-export default Header
+export default NotificationHOC(Header)

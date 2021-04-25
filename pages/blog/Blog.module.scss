@@ -2,14 +2,13 @@
     &__container {
         display: flex;
         flex-direction: column;
-        align-items: center;
         padding: 0 12px;
     }
 
     &__news-container {
         display: flex;
         flex-wrap: wrap;
-        justify-content: center;
+        justify-content: space-between;
     }
 
     &__news {
@@ -28,5 +27,13 @@
 
     &__title--not {
         margin-bottom: 12px;
+    }
+
+    &__news--solo {
+        flex-direction: column;
+    }
+
+    &__img-container {
+        width: 300px;
     }
 }

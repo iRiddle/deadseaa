@@ -5,9 +5,11 @@ import Table from '../../components/Table'
 
 import AuthHOC from '../../HOCS/AuthHOC'
 
+import WooCommerceApi from '../../services/WooCommerceService'
+
 import classnames from './Profile.module.scss'
 
-const Orders = () => {
+const Orders = ({ orders }) => {
     return (
         <MainLayout>
             <ProfileLayout>
@@ -15,6 +17,22 @@ const Orders = () => {
             </ProfileLayout>
         </MainLayout>
     )
+}
+
+export async function getServerSideProps() {
+    const orders = await WooCommerceApi.get('orders').then(response => response.data).catch(err => err)
+
+    if (!orders) {
+        return {
+            notFound: true,
+        }
+    }
+
+    return {
+        props: {
+            orders,
+        }
+    }
 }
 
 export default AuthHOC(Orders)

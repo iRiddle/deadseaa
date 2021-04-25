@@ -1,10 +1,10 @@
 import classnames from './ProductsOnHomePage.module.scss';
 
-const ProductsOnHomePage = ({img, description, price, className = null, discount = false, oldPrice = null}) => {
+const ProductsOnHomePage = ({ img, description, price, className = null, discount = false, oldPrice = null }) => {
     return (
         <div className={`${classnames['product']} ${className}`}>
             <div>
-                <img src={img} className={classnames['product__img']}/>
+                <img src={img} className={classnames['product__img']} />
             </div>
             <div className={classnames['product__container']}>
                 {discount && <span className={classnames['product__discount']}>Скидка!</span>}

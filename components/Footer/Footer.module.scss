@@ -2,7 +2,7 @@
     height: 310px;
     max-width: 1920px;
     margin: 0 auto;
-
+    
     &__container {
         display: flex;
         justify-content: space-between;
@@ -10,7 +10,7 @@
         padding: 24px 35px;
 
         @media (max-width: 767px) {
-       
+
             flex-wrap: wrap;
             padding: 12px;
         }

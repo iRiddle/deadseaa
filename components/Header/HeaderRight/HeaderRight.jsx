@@ -23,19 +23,17 @@ const HeaderRight = ({
                     />
                 </label>
             </div> */}
-            <Link href='/profile'>
-                <a className={classnames['header__lk']}
-                    onMouseEnter={handleMouseEnterLogin}
-                    onMouseLeave={handleMouseLeaveLogin}
-                >
-                    <Image
-                        src="/static/lk.svg"
-                        alt="Личный кабинет"
-                        width={18}
-                        height={18}
-                    />
-                </a>
-            </Link>
+            <span className={classnames['header__lk']}
+                onMouseEnter={handleMouseEnterLogin}
+                onMouseLeave={handleMouseLeaveLogin}
+            >
+                <Image
+                    src="/static/lk.svg"
+                    alt="Личный кабинет"
+                    width={18}
+                    height={18}
+                />
+            </span>
             <Link href='/basket'>
                 <a className={classnames['header__basket']}>
                     <Image

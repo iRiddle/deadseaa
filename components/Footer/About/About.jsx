@@ -3,63 +3,63 @@ import Link from 'next/link'
 const About = ({ className }) => (
     <ul className={className}>
         <li>
-            <Link href="/">
+            <Link href="/catalog">
                 <a>
                     Интернет-магазин
                 </a>
             </Link>
         </li>
         <li>
-            <Link href="/">
+            <Link href="/about">
                 <a>
                     О нас
                 </a>
             </Link>
         </li>
         <li>
-            <Link href="/">
+            <Link href="/licence">
                 <a>
                     Лицензии и свидетельства
                 </a>
             </Link>
         </li>
         <li>
-            <Link href="/">
+            <Link href="/projects">
                 <a>
                     Проекты
                 </a>
             </Link>
         </li>
         <li>
-            <Link href="/">
+            <Link href="/partners">
                 <a>
                     Партнёры
                 </a>
             </Link>
         </li>
         <li>
-            <Link href="/">
+            <Link href="/promotions">
                 <a>
                     Акции
                 </a>
             </Link>
         </li>
         <li>
-            <Link href="/">
+            <Link href="/payment">
                 <a>
                     Оплата и доставка
                 </a>
             </Link>
         </li>
         <li>
-            <Link href="/">
+            <Link href="/reviews">
                 <a>
                     Отзывы
                 </a>
             </Link>
         </li>
         <li>
-            <Link href="/">
+            <Link href="/contacts">
                 <a>
                     Контакты
                 </a>
