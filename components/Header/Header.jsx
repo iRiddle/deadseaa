@@ -57,6 +57,14 @@ const Header = ({ headerIsSalad, isLoadingUser, user, createNotification }) => {
         };
 
         const response = await WordPressCustomApi('/jwt-auth/v1/token', 'POST', { username, password });
+
+        if (response.statusCode === 403) {
+            setLoadingAuth(false)
+            setUsername('');
+            setPassword('');
+            return createNotification('error', 'Пользователь не найден', "Ошибка")
+        }
+
         const userStorage = { userId: response.data.id, session: response.data.token };
         router.push('/profile');
         setDataToLocal('session-cosmetic-token', userStorage);

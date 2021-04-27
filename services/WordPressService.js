@@ -4,7 +4,7 @@ const WPAPI = require('wpapi');
 const WordPressApi = new WPAPI({ endpoint: API_URL });
 
 export const WordPressCustomApi = (endpoint, method = 'GET', body, headers = {}) => {
-    return fetch(`${API_URL}/wp-json${endpoint}`, {
+    return fetch(`${API_URL}${endpoint}`, {
         headers: {
             'Content-Type': 'application/json',
             ...headers
@@ -20,7 +20,8 @@ export const WordPressCustomApi = (endpoint, method = 'GET', body, headers = {})
             return {
                 code: res.code,
                 data: res.data,
-                message: res.message
+                message: res.message,
+                ...res
             }
 
         })

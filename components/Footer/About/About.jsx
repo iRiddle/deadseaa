@@ -59,7 +59,7 @@ const About = ({ className }) => (
             </Link>
         </li>
         <li>
-            <Link href="/contacts">
+            <Link href="/about">
                 <a>
                     Контакты
                 </a>

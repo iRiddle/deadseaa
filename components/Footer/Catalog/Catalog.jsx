@@ -6,35 +6,35 @@ const Catalog = ({ className }) => (
             Каталог
         </li>
         <li>
-            <Link href="/">
+            <Link href="/catalog">
                 <a>
                     Для лица
                 </a>
             </Link>
         </li>
         <li>
-            <Link href="/">
+            <Link href="/catalog">
                 <a>
                     Для тела
                 </a>
             </Link>
         </li>
         <li>
-            <Link href="/">
+            <Link href="/catalog">
                 <a>
                     Для волос
                 </a>
             </Link>
         </li>
         <li>
-            <Link href="/">
+            <Link href="/catalog">
                 <a>
                     Для мужчин
                 </a>
             </Link>
         </li>
         <li>
-            <Link href="/">
+            <Link href="/catalog">
                 <a>
                     Новинки
                 </a>

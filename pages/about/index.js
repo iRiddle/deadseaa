@@ -12,7 +12,7 @@ const About = ({ page }) => {
 }
 
 export async function getStaticProps() {
-    const page = await WordPressApi.pages().slug('contacts').then(response => response).catch(err => err)
+    const page = await WordPressApi.pages().slug('about').then(response => response).catch(err => err);
     if (!page) {
         return {
             notFound: true,
