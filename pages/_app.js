@@ -1,8 +1,10 @@
-import '../styles/globals.css'
 
 import NProgress from 'nprogress';
 import Router from 'next/router';
+import Head from 'next/head'
+
 import "nprogress/nprogress.css";
+import '../styles/globals.css'
 
 NProgress.configure({
     minimum: 0.4,
@@ -15,6 +17,13 @@ Router.events.on('routeChangeStart', () => NProgress.start());
 Router.events.on('routeChangeComplete', () => NProgress.done());
 Router.events.on('routeChangeError', () => NProgress.done());
 
-export default function MyApp({ Component, pageProps }) {
-    return <Component {...pageProps} />
-}
+const App = ({ Component, pageProps }) => (
+    <>
+        <Head>
+            <link rel="stylesheet" href="https://kosmetika.sandev.online/wp-includes/css/dist/block-library/style.min.css?ver=5.7.1"></link>
+        </Head>
+        <Component {...pageProps} />
+    </>
+)
+
+export default App
