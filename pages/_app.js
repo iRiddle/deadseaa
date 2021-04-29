@@ -1,6 +1,6 @@
 
 import NProgress from 'nprogress';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 import Head from 'next/head'
 
 import "nprogress/nprogress.css";
@@ -17,13 +17,16 @@ Router.events.on('routeChangeStart', () => NProgress.start());
 Router.events.on('routeChangeComplete', () => NProgress.done());
 Router.events.on('routeChangeError', () => NProgress.done());
 
-const App = ({ Component, pageProps }) => (
-    <>
-        <Head>
-            <link rel="stylesheet" href="https://kosmetika.sandev.online/wp-includes/css/dist/block-library/style.min.css?ver=5.7.1"></link>
-        </Head>
-        <Component {...pageProps} />
-    </>
-)
+const App = ({ Component, pageProps }) => {
+    const router = useRouter()
+    return (
+        <>
+            <Head>
+                <link rel="stylesheet" href="https://kosmetika.sandev.online/wp-includes/css/dist/block-library/style.min.css?ver=5.7.1"></link>
+            </Head>
+            <Component {...pageProps} key={router.asPath} />
+        </>
+    )
+}
 
 export default App

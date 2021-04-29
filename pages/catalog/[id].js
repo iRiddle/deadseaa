@@ -5,6 +5,7 @@ import isEmpty from 'lodash.isempty'
 import MainLayout from '../../layouts/MainLayout'
 import CatalogLayout from '../../layouts/CatalogLayout'
 import Button from '../../components/Button'
+import Product from '../../components/Product'
 import NotificationHOC from '../../HOCS/NotificationHOC'
 import fabricStorage from '../../helpers/fabricStorage'
 import WooCommerceApi from '../../services/WooCommerceService'
@@ -12,8 +13,9 @@ import { IMAGE_PLACEHOLDER } from '../../constants'
 
 import classnames from './DetailedProduct.module.scss'
 
-const DetailedProduct = ({ product, categories, hits, createNotification }) => {
+const DetailedProduct = ({ product, categories, extraProducts, hits, createNotification }) => {
     const [productDetailed, setDetailProduct] = useState({ ...product, count: 0 } || {})
+
     const { setToStorage } = fabricStorage(createNotification)
 
     const handleIncrease = () => {
@@ -28,7 +30,16 @@ const DetailedProduct = ({ product, categories, hits, createNotification }) => {
         setToStorage(productDetailed)
     }
 
-    const { name, count, description, regular_price, images } = productDetailed
+    const handleExtraSetToStorage = (id) => {
+        const product = extraProducts.filter((product) => product.id === id)[0];
+
+        if (product.regular_price && product.regular_price !== 0) {
+            setToStorage({ ...product, count: product.count ? product.count + 1 : 1 })
+        }
+    }
+
+    const { id, name, count, description, regular_price, images } = productDetailed
+
     return (
         <MainLayout>
             <CatalogLayout productCategories={categories} hits={hits}>
@@ -65,7 +76,19 @@ const DetailedProduct = ({ product, categories, hits, createNotification }) => {
                         </div>
                     </div>
                     <div className={classnames['detailed-product__bottom']}>
-
+                        <h2>Возможно вам будет интересно</h2>
+                        <div className={classnames['detailed-product__extra-container']}>
+                            {extraProducts.length ? extraProducts.filter(elem => elem.id !== id).map(({ id, name, images, regular_price }) =>
+                                <Product
+                                    key={id}
+                                    id={id}
+                                    name={name}
+                                    images={images}
+                                    regularPrice={regular_price}
+                                    handleSetToStorage={handleExtraSetToStorage}
+                                />
+                            ) : 'Нет данных'}
+                        </div>
                     </div>
                 </section>
             </CatalogLayout>
@@ -78,7 +101,11 @@ export async function getServerSideProps({ params }) {
     const categories = await WooCommerceApi.get(`products/categories`).then(response => response.data).catch(err => err)
     const hits = await WooCommerceApi.get(`products`, { category: 28 }).then(response => response.data).catch(err => err)
 
-    if (!product && !categories && !hits) {
+    const extraProductsIds = product.categories.map(item => item.id).join(',')
+
+    const extraProducts = await WooCommerceApi.get('products', { category: extraProductsIds }).then(response => response.data).catch(err => err)
+
+    if (!product && !categories && !hits && !extraProducts) {
         return {
             notFound: true,
         }
@@ -88,6 +115,7 @@ export async function getServerSideProps({ params }) {
         props: {
             product,
             categories,
+            extraProducts,
             hits
         }
     }
