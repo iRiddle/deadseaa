@@ -14,8 +14,6 @@ import { apiEmailConfig } from '../config'
 import isValidEmail from '../helpers/validateEmail'
 import fabricStorage from '../helpers/fabricStorage'
 
-import '../components/GiftSet/GiftSet.module.scss'
-
 import { init } from 'emailjs-com';
 init("user_fmW6dnSdyQtVMGGNFKfh4");
 
@@ -26,7 +24,7 @@ const MainPage = ({ page, faceProducts, stockProducts, createNotification }) => 
     const { setToStorage } = fabricStorage(createNotification)
 
     const handleSetToStorage = (id) => {
-        const product = products.filter((product) => product.id === id)[0];
+        const product = [...faceProducts, ...stockProducts].filter((product) => product.id === id)[0];
 
         if (product.regular_price && product.regular_price !== 0) {
             setToStorage({ ...product, count: product.count ? product.count + 1 : 1 })

@@ -31,7 +31,7 @@ const ProductsOnHomePage = ({ id, img, description, price, discount, oldPrice, i
                     <Button
                         className={classnames['product__button']}
                         text='КУПИТЬ'
-                        disabled={true}
+                        disabled={!price && price !== 0}
                         onClick={() => handleSetToStorage(id)}
                     />
                 </div>
