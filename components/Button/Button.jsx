@@ -5,8 +5,8 @@ import Loader from '../Loader'
 
 import classnames from './Button.module.scss'
 
-const Button = ({ text, hasIcon, className, notContainer, onClick, disabled, isLoading }) => (
-    <button className={cn(classnames['button'], className)} onClick={onClick} disabled={disabled || isLoading}>
+const Button = ({ type, text, hasIcon, className, notContainer, onClick, disabled, isLoading }) => (
+    <button type={type} className={cn(classnames['button'], className)} onClick={onClick} disabled={disabled || isLoading}>
         <div className={cn(classnames['button__container'], notContainer && classnames['button__container--not'])}>
             {hasIcon &&
                 <Image

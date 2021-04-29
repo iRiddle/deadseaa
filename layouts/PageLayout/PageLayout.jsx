@@ -1,10 +1,10 @@
 
 import classes from './PageLayout.module.scss'
 
-const PageLayout = ({ content }) => {
+const PageLayout = ({ content, isNoneTitle }) => {
     return (
         <>
-            <h1>{content.title.rendered}</h1>
+            {!isNoneTitle && <h1>{content.title.rendered}</h1>}
             <section className={classes['page-layout']} dangerouslySetInnerHTML={{ __html: content.content.rendered || '' }} />
         </>
     )

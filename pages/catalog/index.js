@@ -11,7 +11,7 @@ import fabricStorage from '../../helpers/fabricStorage'
 
 import WooCommerceApi from '../../services/WooCommerceService'
 
-const Catalog = ({ products, categories, createNotification }) => {
+const Catalog = ({ products, categories, hits, createNotification }) => {
     const { setToStorage } = fabricStorage(createNotification)
 
     const handleSetToStorage = (id) => {
@@ -28,7 +28,7 @@ const Catalog = ({ products, categories, createNotification }) => {
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             </Head>
             <MainLayout>
-                <CatalogLayout productCategories={categories}>
+                <CatalogLayout productCategories={categories} hits={hits}>
                     {products.length ? products.map(({ id, name, images, regular_price }) =>
                         <Product
                             key={id}
@@ -48,8 +48,9 @@ const Catalog = ({ products, categories, createNotification }) => {
 export async function getServerSideProps() {
     const products = await WooCommerceApi.get('products').then(response => response.data).catch(err => err)
     const categories = await WooCommerceApi.get(`products/categories`).then(response => response.data).catch(err => err)
+    const hits = await WooCommerceApi.get(`products`, { category: 28 }).then(response => response.data).catch(err => err)
 
-    if (!products && !categories) {
+    if (!products && !categories && !hits) {
         return {
             notFound: true,
         }
@@ -58,7 +59,8 @@ export async function getServerSideProps() {
     return {
         props: {
             products,
-            categories
+            categories,
+            hits
         }
     }
 }

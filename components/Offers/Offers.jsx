@@ -1,19 +1,24 @@
+
 import ProductsOnHomePage from '../ProductsOnHomePage';
+
 import classnames from './Offers.module.scss';
 
-const Offers = () => {
+const Offers = ({ faceProducts, stockProducts, handleSetToStorage }) => {
     return (
         <div className={classnames['offers']}>
             <div className={classnames['offers__container']}>
-                <ProductsOnHomePage
-                    img={'../../static/content/cream.png'}
-                    description={'Масло для тела для предотвращения старения с зеленым чаем и геранью'}
-                    price={'915 руб'}
-                    className={classnames['offers__product']} />
-                <ProductsOnHomePage
-                    img={'../../static/content/Cream2.png'}
-                    description={'Масло для тела для предотвращения старения с зеленым чаем и геранью'}
-                    price={'915 руб'} />
+                {faceProducts.length > 0 ? faceProducts.map(({ id, name, images, regular_price }, index) =>
+                    <ProductsOnHomePage
+                        key={id}
+                        id={id}
+                        img={images}
+                        description={name}
+                        price={regular_price}
+                        className={classnames['offers__product']}
+                        handleSetToStorage={handleSetToStorage}
+                        isShadow={index % 2 !== 0}
+                    />
+                ) : <h2>На данный момент продуктов не существует</h2>}
             </div>
             <div className={classnames['offers__block']}>
                 <div className={classnames['offers__paragraph-container']}>
@@ -38,21 +43,18 @@ const Offers = () => {
                 </div>
             </div>
             <div className={classnames['offers__container']}>
-                <ProductsOnHomePage
-                    img={'../../static/content/cream.png'}
-                    description={'Масло для тела для предотвращения старения с зеленым чаем и геранью'}
-                    price={'915 руб'}
-                    className={classnames['offers__product']}
-                    discount={true}
-                    oldPrice={1000}
-                />
-                <ProductsOnHomePage
-                    img={'../../static/content/Cream2.png'}
-                    description={'Масло для тела для предотвращения старения с зеленым чаем и геранью'}
-                    price={'915 руб'}
-                    discount={true}
-                    oldPrice={1000}
-                />
+                {stockProducts.length > 0 ? stockProducts.map(({ id, name, images, regular_price }, index) =>
+                    <ProductsOnHomePage
+                        key={id}
+                        id={id}
+                        img={images}
+                        description={name}
+                        price={regular_price}
+                        handleSetToStorage={handleSetToStorage}
+                        className={classnames['offers__product']}
+                        isShadow={index % 2 !== 0}
+                    />
+                ) : <h2>На данный момент акций не существует</h2>}
             </div>
         </div>
     )

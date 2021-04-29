@@ -61,6 +61,10 @@
     &__li {
         margin-bottom: 11px;
         border-bottom: 1px solid #E3E3E3;
+
+        &--invisible {
+            display: none;
+        }
     }
 
     &__nav-link {
@@ -68,6 +72,13 @@
         width: 100%;
         height: 100%;
         padding-bottom: 22px;
+        transition: 0.4s;
+        transform: scale(1.0);
+
+        &:hover {
+            transition: 0.4s;
+            transform: scale(1.1);
+        }
     }
 
     &__breadcrumbs {

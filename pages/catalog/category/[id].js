@@ -10,7 +10,7 @@ import fabricStorage from '../../../helpers/fabricStorage'
 
 import WooCommerceApi from '../../../services/WooCommerceService'
 
-const Category = ({ products, categories, createNotification }) => {
+const Category = ({ products, categories, hits, createNotification }) => {
     const { setToStorage } = fabricStorage(createNotification)
 
     const handleSetToStorage = (id) => {
@@ -20,7 +20,7 @@ const Category = ({ products, categories, createNotification }) => {
 
     return (
         <MainLayout>
-            <CatalogLayout productCategories={categories}>
+            <CatalogLayout productCategories={categories} hits={hits}>
                 {products.length ? products.map(({ id, name, images, regular_price }) =>
                     <Product
                         key={id}
@@ -39,8 +39,9 @@ const Category = ({ products, categories, createNotification }) => {
 export async function getServerSideProps({ params }) {
     const products = await WooCommerceApi.get(`products`, { category: params.id }).then(response => response.data).catch(err => err)
     const categories = await WooCommerceApi.get(`products/categories`).then(response => response.data).catch(err => err)
+    const hits = await WooCommerceApi.get(`products`, { category: 28 }).then(response => response.data).catch(err => err)
 
-    if (!products) {
+    if (!products && !categories && !hits) {
         return {
             notFound: true,
         }
@@ -49,19 +50,10 @@ export async function getServerSideProps({ params }) {
     return {
         props: {
             products,
-            categories
+            categories,
+            hits
         }
     }
 }
-
-// export async function getStaticPaths() {
-//     const categories = await WooCommerceApi.get(`products/categories`).then(response => response.data).catch(err => err)
-
-//     const paths = categories.map((category) => ({
-//         params: { id: category.id.toString() },
-//     }))
-
-//     return { paths, fallback: false }
-// }
 
 export default NotificationHOC(Category)

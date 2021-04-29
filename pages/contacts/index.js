@@ -11,7 +11,7 @@ const Contacts = ({ page }) => {
     )
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
     const page = await WordPressApi.pages().slug('contacts').then(response => response).catch(err => err)
     if (!page) {
         return {

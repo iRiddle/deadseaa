@@ -36,11 +36,6 @@ const ProfileLayout = ({ children }) => {
                             </ActiveLink>
                         </li>
                         <li className={classnames['profile-layout__link']}>
-                            <ActiveLink activeClassName={classnames['profile-layout__active']} href='/profile/points'>
-                                <a className={classnames['profile-layout__nav-link']}>Баллы</a>
-                            </ActiveLink>
-                        </li>
-                        <li className={classnames['profile-layout__link']}>
                             <button className={classnames['profile-layout__exit']} onClick={logout}>Выйти</button>
                         </li>
                     </ul>

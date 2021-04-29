@@ -7,17 +7,8 @@ import CatalogAside from './CatalogAside'
 
 import classnames from './CatalogLayout.module.scss'
 
-const CatalogLayout = ({ children, productCategories }) => {
-    const hitsMock = [
-        { id: 1, text: 'Кондиционер для волос с кератином и витамином Е', src: '/static/content/hit1.png' },
-        { id: 2, text: 'Кондиционер для волос с кератином и витамином Е', src: '/static/content/hit2.png' },
-        { id: 3, text: 'Кондиционер для волос с кератином и витамином Е', src: '/static/content/hit3.png' },
-        { id: 4, text: 'Кондиционер для волос с кератином и витамином Е', src: '/static/content/hit4.png' },
-        { id: 5, text: 'Кондиционер для волос с кератином и витамином Е', src: '/static/content/hit5.png' }
-    ]
-
-    const breadcrumbs = [{ id: 1, href: '/', name: 'Категории' }]
-
+const CatalogLayout = ({ children, productCategories, hits }) => {
+    const breadcrumbs = [{ id: 1, href: '/catalog', name: 'Категории' }]
     return (
         <div className={classnames['catalog-layout']}>
             <div className={classnames['catalog-layout__container']}>
@@ -30,7 +21,9 @@ const CatalogLayout = ({ children, productCategories }) => {
                         Бестселлеры
                     </h2>
                     <div className={classnames['catalog-layout__hits']}>
-                        {hitsMock.map(({ id, text, src }) => <Hit key={id} className={classnames['catalog-layout__hit']} text={text} src={src} />)}
+                        {hits.slice(0, 6).map(({ id, name, images }) => (
+                            <Hit key={id} id={id} className={classnames['catalog-layout__hit']} name={name} images={images} />
+                        ))}
                     </div>
                 </div>
                 <div className={classnames['catalog-layout__content']}>

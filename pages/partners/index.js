@@ -11,7 +11,7 @@ const Partners = ({ page }) => {
     )
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
     const page = await WordPressApi.pages().slug('partners').then(response => response).catch(err => err)
     if (!page) {
         return {
