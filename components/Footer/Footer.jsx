@@ -21,6 +21,20 @@ const Footer = () => (
                 <Contact />
             </div>
         </div>
+        <div className={classnames['footer__container--mobile']}>
+            <div className={classnames['footer__content']}>
+                <Logo className={classnames['footer__logo']} />
+            </div>
+            <div className={classnames['footer__content']}>
+                <Contact />
+            </div>
+            <div className={classnames['footer__content']}>
+                <Catalog className={classnames['footer__catalog']} />
+            </div>
+            <div className={classnames['footer__content']}>
+                <About className={classnames['footer__about']} />
+            </div>
+        </div>
     </footer>
 )
 
