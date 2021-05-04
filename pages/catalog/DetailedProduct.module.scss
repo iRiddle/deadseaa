@@ -1,10 +1,18 @@
 .detailed-product {
     &__top {
         display: flex;
+
+        @media (max-width: 991px) {
+            flex-direction: column;
+        }
     }
 
     &__left {
         margin-right: 58px;
+
+        @media (max-width: 991px) {
+            margin-right: 0;
+        }
     }
 
     &__cost {
