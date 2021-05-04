@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import cn from 'classnames'
 
 import Button from '../Button'
@@ -22,7 +23,11 @@ const ProductsOnHomePage = ({ id, img, description, price, discount, oldPrice, i
                 </div>
                 <div className={classnames['product__container']}>
                     {discount && <span className={classnames['product__discount']}>Скидка!</span>}
-                    <p className={classnames['product__description']}>{description}</p>
+                    <Link href={`/catalog/${id}`}>
+                        <a className={classnames['product__title']}>
+                            {description}
+                        </a>
+                    </Link>
                     <div>
                         {discount && <del className={`${classnames['product__old-price']} 
                     ${classnames['product__price']}`}>{oldPrice} руб</del>}

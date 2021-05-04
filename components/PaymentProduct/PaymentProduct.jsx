@@ -3,12 +3,15 @@ import cn from 'classnames'
 
 import Button from '../Button'
 
+import { IMAGE_PLACEHOLDER } from '../../constants'
+
 import classnames from './PaymentProduct.module.scss'
 
 const PaymentProduct = ({
     className,
     name,
     regularPrice,
+    images,
     count,
     handleIncrease,
     handleDecrease,
@@ -20,7 +23,7 @@ const PaymentProduct = ({
                     <Image
                         width={75}
                         height={75}
-                        src='/static/content/payment-product.png'
+                        src={images.length < 1 ? IMAGE_PLACEHOLDER : images[0].src}
                     />
                 </div>
             </td>

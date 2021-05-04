@@ -1,17 +1,17 @@
 
-import { getDataFromLocal } from '../../storage'
+import cn from 'classnames'
+import isEmpty from 'lodash.isempty'
+
 import classnames from './OrderDataTable.module.scss'
 
-const OrderDataTable = () => {
-    const orders = getDataFromLocal('phylosophyProducts');
-
-    const totalPrice = orders && orders.reduce((accumulator, currentValue) => {
+const OrderDataTable = ({ orders }) => {
+    const totalPrice = !isEmpty(orders) && orders.reduce((accumulator, currentValue) => {
         return accumulator + (Number(currentValue.price) * currentValue.count)
     }, 0)
 
     const orderArray = orders && orders.map((elem, i) => {
         return (
-            <tr className={(i !== 0 && i % 2 !== 0) && classnames['order__tr--white']} key={elem.id}>
+            <tr className={cn(i % 2 === 0 && classnames['order__tr--white'])} key={elem.id}>
                 <td className={classnames['order__td']}>
                     {elem.name} <span className={classnames['order__count']}>{elem.count}шт.</span>
                 </td>
@@ -20,7 +20,7 @@ const OrderDataTable = () => {
         )
     })
 
-    const ordersLength = orders && orders.length
+    const ordersLength = !isEmpty(orders) && orders.length
 
     return (
         <div className={classnames['order']}>
@@ -34,13 +34,13 @@ const OrderDataTable = () => {
                         </tr>
                     </thead>
                     <tfoot>
-                        <tr className={ordersLength % 2 === 0 && classnames['order__tr--white']}>
+                        <tr className={cn(ordersLength % 2 === 0 && classnames['order__tr--white'])}>
                             <td className={classnames['order__subtotal-str']}>Подытог:</td>
-                            <td className={classnames['order__price']}>{totalPrice} руб</td>
+                            <td className={classnames['order__price']}>{`${totalPrice} руб.`}</td>
                         </tr>
-                        <tr className={ordersLength % 2 !== 0 && classnames['order__tr--white']}>
+                        <tr className={cn(ordersLength % 2 !== 0 && classnames['order__tr--white'])}>
                             <td className={classnames['order__subtotal-str']}>Итого:</td>
-                            <td className={classnames['order__price']}>{totalPrice} руб</td>
+                            <td className={classnames['order__price']}>{`${totalPrice} руб.`}</td>
                         </tr>
                     </tfoot>
                     <tbody>
