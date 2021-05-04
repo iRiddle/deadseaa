@@ -44,7 +44,7 @@ const HeaderRight = ({
                     />
                 </a>
             </Link>
-            <Button
+            {/* <Button
                 className={classnames['header__search--mobile-btn']}
                 text={
                     <Image
@@ -56,7 +56,7 @@ const HeaderRight = ({
                 }
                 onClick={handleSearch}
                 notContainer
-            />
+            /> */}
         </>
     )
 }

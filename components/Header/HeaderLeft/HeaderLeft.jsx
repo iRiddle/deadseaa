@@ -21,7 +21,7 @@ const HeaderLeft = () => {
                 text={
                     <Image
                         src="/static/burger.svg"
-                        alt="Поиск"
+                        alt="Открыть"
                         width={18}
                         height={18}
                     />
@@ -31,7 +31,7 @@ const HeaderLeft = () => {
                 notContainer
                 onClick={handleMainVisible}
             />
-            <AdaptiveNavigation show={mainVisible} closeMenu={handleMainVisible}/>
+            <AdaptiveNavigation show={mainVisible} closeMenu={handleMainVisible} />
             <Logo className={classnames['header__logo']} />
             <nav className={classnames['header__navigation']}>
                 <ul className={classnames['header__list-links']}>

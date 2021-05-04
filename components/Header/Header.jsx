@@ -130,7 +130,7 @@ const Header = ({ headerIsSalad, isLoadingUser, user, createNotification }) => {
                         />
                     </div>
                 </div>
-                {search && (
+                {/* {search && (
                     <div className={classnames['header__bottom']}>
                         <div className={classnames['header__search--mobile']}>
                             <input id='search-input' className={classnames['header__input']} type="search" />
@@ -144,7 +144,7 @@ const Header = ({ headerIsSalad, isLoadingUser, user, createNotification }) => {
                             </label>
                         </div>
                     </div>
-                )}
+                )} */}
                 {getUserComponent()}
             </div>
         </header>
