@@ -63,12 +63,13 @@ const Basket = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {products.map(({ id, name, regular_price, count }) =>
+                        {products.map(({ id, name, regular_price, count, images }) =>
                             <PaymentProduct
                                 key={id}
                                 name={name}
                                 regularPrice={regular_price}
                                 count={count}
+                                images={images}
                                 handleIncrease={() => handleIncrease(id)}
                                 handleDecrease={() => handleDecrease(id)}
                                 handleRemove={() => handleRemove(id)}
