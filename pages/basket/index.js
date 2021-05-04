@@ -25,7 +25,10 @@ const Basket = () => {
     }
 
     const handleDecrease = (id) => {
-        const mappedProducts = products.map(product => product.id === id ? { ...product, count: product.count - 1 } : product)
+        const mappedProducts = products
+            .map(product => product.id === id ? { ...product, count: product.count - 1 } : product)
+            .filter(product => product.count !== 0)
+
         setProducts(mappedProducts)
         setDataToLocal('phylosophyProducts', mappedProducts)
     }
@@ -74,7 +77,7 @@ const Basket = () => {
                     </tbody>
                 </table>
                 <div className={classnames['basket__checkout']}>
-                    <Link href="/checkout"><a><Button text='Перейти к оформлению' onClick={() => localStorage.removeItem('phylosophyProduct')} /></a></Link>
+                    <Link href="/checkout"><a><Button text='Перейти к оформлению' /></a></Link>
                     <span className={classnames['basket__checkout-text']} >{`Итого: ${getTotal()}руб`}</span>
                 </div>
             </section>
