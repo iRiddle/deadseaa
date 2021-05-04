@@ -22,6 +22,7 @@ const App = ({ Component, pageProps }) => {
     return (
         <>
             <Head>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                 <link rel="stylesheet" href="https://kosmetika.sandev.online/wp-includes/css/dist/block-library/style.min.css?ver=5.7.1"></link>
             </Head>
             <Component {...pageProps} key={router.asPath} />
