@@ -62,25 +62,20 @@ const MainPage = ({ page, faceProducts, stockProducts, createNotification }) => 
     }
 
     return (
-        <>
-            <Head>
-                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-            </Head>
-            <MainLayout>
-                <PageLayout content={page[0]} isNoneTitle={true} />
-                <Offers
-                    faceProducts={faceProducts.slice(0, 2)}
-                    stockProducts={stockProducts.slice(0, 2)}
-                    handleSetToStorage={handleSetToStorage}
-                />
-                <Contact
-                    email={email}
-                    loadingEmail={loadingEmail}
-                    sendEmail={sendEmail}
-                    handleEmail={handleEmail}
-                />
-            </MainLayout>
-        </>
+        <MainLayout>
+            <PageLayout content={page[0]} isNoneTitle={true} />
+            <Offers
+                faceProducts={faceProducts.slice(0, 2)}
+                stockProducts={stockProducts.slice(0, 2)}
+                handleSetToStorage={handleSetToStorage}
+            />
+            <Contact
+                email={email}
+                loadingEmail={loadingEmail}
+                sendEmail={sendEmail}
+                handleEmail={handleEmail}
+            />
+        </MainLayout>
     )
 }
 
