@@ -1,0 +1,32 @@
+.pagination {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+
+    &__active {
+        border: 1px solid #8ECAC7;
+        background-color: #8ECAC7;
+        border-radius: 3px;
+        color: #fff;
+    }
+
+    li {
+        display: flex;
+        cursor: pointer;
+        transition: 0.4s;
+
+        &:hover {
+            transform: scale(1.1);
+            transition: 0.4s;
+        }
+
+        a {
+            padding: 10px;
+        }
+    }
+
+    &--previous,
+    &--next {
+        display: none !important;
+    }
+}

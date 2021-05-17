@@ -48,18 +48,18 @@
         justify-content: center;
         margin-left: 24px;
 
-        @media(max-width: 1200px) {
-            margin-left: 18px;
-        }
-
-        @media(max-width: 776px) {
-            margin-left: 40px;
+        @media(max-width: 767px) {
+            margin-left: 0;
         }
     }
 
     &__main-container {
         display: flex;
         padding: 24px;
+
+        @media (max-width: 575px) {
+            flex-direction: column;
+        }
     }
 
     &__discount {

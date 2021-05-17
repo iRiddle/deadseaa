@@ -1,5 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 import isEmpty from 'lodash.isempty'
 
 import MainLayout from '../../layouts/MainLayout'
@@ -13,8 +15,9 @@ import { IMAGE_PLACEHOLDER } from '../../constants'
 
 import classnames from './DetailedProduct.module.scss'
 
-const DetailedProduct = ({ product, categories, extraProducts, hits, createNotification }) => {
+const DetailedProduct = ({ product, categories, extraProducts, hits, pageCount, isError, createNotification }) => {
     const [productDetailed, setDetailProduct] = useState({ ...product, count: 0 } || {})
+    const router = useRouter()
 
     const { setToStorage } = fabricStorage(createNotification)
 
@@ -38,11 +41,48 @@ const DetailedProduct = ({ product, categories, extraProducts, hits, createNotif
         }
     }
 
+    const handlePageClick = (page) => {
+        const currentPath = router.pathname;
+        const currentQuery = { ...router.query };
+        currentQuery.page = page.selected + 1;
+
+        router.push({
+            pathname: currentPath,
+            query: currentQuery,
+        });
+    }
+
+    useEffect(() => {
+        if (isEmpty(router.query) || isEmpty(router.query.page) || router.query.page < 1) {
+            router.push(`/catalog/${productDetailed.id}?page=1`, undefined, { shallow: true })
+        }
+    }, [])
+
     const { id, name, count, description, regular_price, images } = productDetailed
+
+    if (isError) {
+        return (
+            <MainLayout>
+                <CatalogLayout>
+                    <div className={classnames['detailed-product--not-found']}>
+                        <h1>Не найдено</h1>
+                        <Link href="/catalog?page=1">
+                            <a>В каталог</a>
+                        </Link>
+                    </div>
+                </CatalogLayout>
+            </MainLayout >
+        )
+    }
 
     return (
         <MainLayout>
-            <CatalogLayout productCategories={categories} hits={hits}>
+            <CatalogLayout
+                productCategories={categories}
+                hits={hits}
+                pageCount={pageCount}
+                handlePageClick={handlePageClick}
+            >
                 <section className={classnames['detailed-product']}>
                     <div className={classnames['detailed-product__top']}>
                         <div className={classnames['detailed-product__left']}>
@@ -96,27 +136,39 @@ const DetailedProduct = ({ product, categories, extraProducts, hits, createNotif
     )
 }
 
-export async function getServerSideProps({ params }) {
-    const product = await WooCommerceApi.get(`products/${params.id}`).then(response => response.data).catch(err => err)
-    const categories = await WooCommerceApi.get(`products/categories`).then(response => response.data).catch(err => err)
-    const hits = await WooCommerceApi.get(`products`, { category: 28 }).then(response => response.data).catch(err => err)
+export async function getServerSideProps({ query, params }) {
+    try {
+        const page = query.page || 1
+        const product = await WooCommerceApi.get(`products/${params.id}`).then(response => response.data).catch(err => err)
+        const categories = await WooCommerceApi.get(`products/categories`).then(response => response.data).catch(err => err)
+        const hits = await WooCommerceApi.get(`products`, { category: 28 }).then(response => response.data).catch(err => err)
 
-    const extraProductsIds = product.categories.map(item => item.id).join(',')
+        const extraProductsIds = product.categories.map(item => item.id).join(',')
 
-    const extraProducts = await WooCommerceApi.get('products', { category: extraProductsIds }).then(response => response.data).catch(err => err)
+        const extraProducts = await WooCommerceApi.get('products', { category: extraProductsIds, page: page }).then(response => response).catch(err => err)
 
-    if (!product && !categories && !hits && !extraProducts) {
-        return {
-            notFound: true,
+        const { data, headers } = extraProducts
+
+        if (!product && !categories && !hits && !data && !headers) {
+            return {
+                notFound: true,
+            }
         }
-    }
 
-    return {
-        props: {
-            product,
-            categories,
-            extraProducts,
-            hits
+        return {
+            props: {
+                product,
+                categories,
+                extraProducts: !isEmpty(data) ? data : [],
+                pageCount: !isEmpty(headers) ? headers['x-wp-totalpages'] : 0,
+                hits
+            }
+        }
+    } catch {
+        return {
+            props: {
+                isError: true
+            }
         }
     }
 }

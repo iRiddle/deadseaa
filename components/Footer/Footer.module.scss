@@ -110,4 +110,12 @@
         // display: block;
         // margin-top: 64px;
     }
+
+    &__info {
+        margin-top: 12px;
+
+        &--bold {
+            font-weight: bold;
+        }
+    }
 }

@@ -89,4 +89,14 @@
         display: flex;
         flex-wrap: wrap;
     }
+
+    &--not-found {
+        display: flex;
+        flex-direction: column;
+
+
+        h1 {
+            margin-bottom: 12px;
+        }
+    }
 }

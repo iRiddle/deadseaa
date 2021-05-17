@@ -24,6 +24,13 @@ const About = ({ className }) => (
             </Link>
         </li>
         <li>
+            <Link href="/privacy-policy">
+                <a>
+                    Пользовательское соглашение
+                </a>
+            </Link>
+        </li>
+        <li>
             <Link href="/projects">
                 <a>
                     Проекты
