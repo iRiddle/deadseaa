@@ -72,12 +72,7 @@ const Checkout = ({ createNotification }) => {
 	const onSubmit = (data) => {
 		const { city, email, fullName, locality, phone, postCode, state } = data
 		setIsLoading(true)
-		const isEmptySomeFiled = [fullName, locality, phone, email].some(field => !field.length);
-		if (isEmptySomeFiled) {
-			setIsLoading(false);
-			return createNotification('error', "Одно из обязательных полей не заполнено", "Ошибка")
-		}
-
+		const userId = getDataFromLocal('session-cosmetic-token').userId || 0;
 		const approvedData = {
 			payment_method: 'yookassa_epl',
 			payment_method_title: "yookassa_epl",
@@ -95,6 +90,7 @@ const Checkout = ({ createNotification }) => {
 				postcode: postCode.toString(),
 				country: "RU"
 			},
+			customer_id: userId,
 			shipping_lines: [
 				{
 					method_id: "flat_rate",

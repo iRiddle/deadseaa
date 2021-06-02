@@ -1,28 +1,14 @@
 import Link from 'next/link'
 import Image from 'next/image'
 
-import Button from '../../Button'
-
 import classnames from '../Header.module.scss'
 
 const HeaderRight = ({
-    handleSearch,
     handleMouseEnterLogin,
     handleMouseLeaveLogin
 }) => {
     return (
         <>
-            {/* <div className={classnames['header__search']}>
-                <input id='search-input' className={classnames['header__input']} type="search" />
-                <label htmlFor="search-input">
-                    <Image
-                        src="/static/search.svg"
-                        alt="Поиск"
-                        width={18}
-                        height={18}
-                    />
-                </label>
-            </div> */}
             <span className={classnames['header__lk']}
                 onMouseEnter={handleMouseEnterLogin}
                 onMouseLeave={handleMouseLeaveLogin}
@@ -44,19 +30,6 @@ const HeaderRight = ({
                     />
                 </a>
             </Link>
-            {/* <Button
-                className={classnames['header__search--mobile-btn']}
-                text={
-                    <Image
-                        src="/static/search.svg"
-                        alt="Поиск"
-                        width={18}
-                        height={18}
-                    />
-                }
-                onClick={handleSearch}
-                notContainer
-            /> */}
         </>
     )
 }

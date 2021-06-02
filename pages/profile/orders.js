@@ -1,3 +1,6 @@
+import cookies from 'next-cookies'
+import isEmpty from 'lodash.isempty'
+
 import MainLayout from '../../layouts/MainLayout'
 import ProfileLayout from '../../layouts/ProfileLayout'
 
@@ -13,14 +16,19 @@ const Orders = ({ orders }) => {
     return (
         <MainLayout>
             <ProfileLayout>
-                <Table className={classnames['profile-layout__table']} />
+                {!isEmpty(orders) ? (
+                    <Table className={classnames['profile-layout__table']} orders={orders} />
+                ) :
+                    <h1 className={classnames['profile-layout__empty']}>Данных нет</h1>
+                }
             </ProfileLayout>
         </MainLayout>
     )
 }
 
-export async function getServerSideProps() {
-    const orders = await WooCommerceApi.get('orders').then(response => response.data).catch(err => err)
+export async function getServerSideProps(ctx) {
+    const customerId = cookies(ctx).consumerId || '';
+    const orders = await WooCommerceApi.get('orders', { customer: customerId }).then(response => response.data).catch(err => err)
 
     if (!orders) {
         return {

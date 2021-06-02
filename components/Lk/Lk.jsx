@@ -18,7 +18,7 @@ const Lk = ({ user }) => {
                 </span>
             </div>
             <div className={classnames['lk__bottom']}>
-                <Link className={classnames['lk__link']} href="/profile">
+                <Link className={classnames['lk__link']} href="/profile/orders">
                     <a>
                         В личный кабинет
                     </a>

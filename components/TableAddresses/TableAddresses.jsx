@@ -1,22 +1,22 @@
 import cn from 'classnames'
 import isEmpty from 'lodash.isempty'
-import { format } from "date-fns";
 
 // import Button from '../Button'
 
-import { statuses } from '../../helpers/translator'
+import { contries } from '../../helpers/translator'
 
-import classnames from './Table.module.scss'
+import classnames from './TableAddresses.module.scss'
 
-const Table = ({ className, orders }) => {
+const TableAddresses = ({ className, orders }) => {
     return (
         <table className={cn(classnames['table'], className)} border="0" cellSpacing="0" cellPadding="0">
             <thead>
                 <tr>
                     <th>№ заказа</th>
-                    <th>Дата</th>
-                    <th>Статус</th>
-                    <th>Итого</th>
+                    <th>Адрес</th>
+                    <th>Город</th>
+                    <th>Субъект</th>
+                    <th>Почтовый индекс</th>
                     {/* <th>Действия</th> */}
                 </tr>
             </thead>
@@ -24,9 +24,10 @@ const Table = ({ className, orders }) => {
                 {!isEmpty(orders) && orders.map(item =>
                     <tr key={item.id}>
                         <td>{item.id}</td>
-                        <td>{format(new Date(item.date_created), "dd.MM.yyyy")}</td>
-                        <td>{item.status === 'on-hold' ? statuses[item.status] : 'В обработке'}</td>
-                        <td>{`${item.total} руб.`}</td>
+                        <td>{item.shipping.address_1}</td>
+                        <td>{item.shipping.city}</td>
+                        <td>{contries[item.shipping.country]}</td>
+                        <td>{item.shipping.postcode}</td>
                         {/* <Button text='Действия' hasIcon></Button> */}
                     </tr>
                 )}
@@ -35,4 +36,4 @@ const Table = ({ className, orders }) => {
     )
 }
 
-export default Table
+export default TableAddresses

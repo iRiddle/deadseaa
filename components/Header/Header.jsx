@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
-import Image from 'next/image'
 import cn from 'classnames'
 
 import HeaderLeft from './HeaderLeft'
@@ -19,17 +18,12 @@ import { WordPressCustomApi } from '../../services/WordPressService'
 import classnames from './Header.module.scss'
 
 const Header = ({ headerIsSalad, isLoadingUser, user, createNotification }) => {
-    const [search, setSearch] = useState(false)
     const [hovered, setHover] = useState(false)
     const [isLoadingAuth, setLoadingAuth] = useState(false)
 
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const router = useRouter()
-
-    const handleSearch = () => {
-        setSearch(!search)
-    }
 
     const handleMouseEnterLogin = () => {
         setHover(true)
@@ -66,8 +60,9 @@ const Header = ({ headerIsSalad, isLoadingUser, user, createNotification }) => {
         }
 
         const userStorage = { userId: response.data.id, session: response.data.token };
-        router.push('/profile');
+        router.push('/profile/orders');
         setDataToLocal('session-cosmetic-token', userStorage);
+        document.cookie = `consumerId=${response.data.id}; path=/; expires=Fri, 31 Dec 9999 23:59:59 GMT"`;
         setLoadingAuth(false);
     }
 
@@ -84,7 +79,7 @@ const Header = ({ headerIsSalad, isLoadingUser, user, createNotification }) => {
                     onMouseEnter={handleMouseEnterLogin}
                     onMouseLeave={handleMouseLeaveLogin}
                     hovered={hovered}
-                    isLoading={isLoadingUser} // этот компонент
+                    isLoading={isLoadingUser}
                 >
                     <Lk
                         hovered={hovered}
@@ -124,27 +119,11 @@ const Header = ({ headerIsSalad, isLoadingUser, user, createNotification }) => {
                     </div>
                     <div className={classnames['header__right-side']}>
                         <HeaderRight
-                            handleSearch={handleSearch}
                             handleMouseEnterLogin={handleMouseEnterLogin}
                             handleMouseLeaveLogin={handleMouseLeaveLogin}
                         />
                     </div>
                 </div>
-                {/* {search && (
-                    <div className={classnames['header__bottom']}>
-                        <div className={classnames['header__search--mobile']}>
-                            <input id='search-input' className={classnames['header__input']} type="search" />
-                            <label htmlFor="search-input">
-                                <Image
-                                    src="/static/search.svg"
-                                    alt="Поиск"
-                                    width={18}
-                                    height={18}
-                                />
-                            </label>
-                        </div>
-                    </div>
-                )} */}
                 {getUserComponent()}
             </div>
         </header>

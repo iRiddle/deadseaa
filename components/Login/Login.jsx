@@ -14,7 +14,7 @@ const Login = ({
 }) => {
     return (
         <div className={classnames['login']}>
-            <h2>Вход</h2>
+            <h2 className={classnames['login__title']}>Вход</h2>
             <div className={classnames['login__inputs']}>
                 <label className={classnames['login__input']}>
                     <span className={classnames['login__legend']}>Логин:</span>
@@ -32,11 +32,11 @@ const Login = ({
                         Регистрация
                     </a>
                 </Link>
-                <Link href="/">
+                {/* <Link href="/">
                     <a className={cn(classnames['logo'])}>
                         Забыли пароль?
                     </a>
-                </Link>
+                </Link> */}
             </div>
         </div>
     )

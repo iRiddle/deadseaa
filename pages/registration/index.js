@@ -34,9 +34,10 @@ const Registration = ({ createNotification }) => {
         const response = await WooCommerceApi.post('customers', body).then(response => response.data).catch(err => err)
         const session = await WordPressCustomApi('/jwt-auth/v1/token', 'POST', { username, password })
         const userStorage = { userId: response.id, session: session.data.token }
+        document.cookie = `consumerId=${response.id}; path=/; expires=Fri, 31 Dec 9999 23:59:59 GMT"`;
 
         setDataToLocal('session-cosmetic-token', userStorage)
-        router.push('/profile')
+        router.push('/profile/orders')
         setLoading(false)
         createNotification('ok', 'Регистрация прошла успешно', "Уведомление")
     }

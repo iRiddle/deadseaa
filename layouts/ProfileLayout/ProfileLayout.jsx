@@ -11,6 +11,7 @@ const ProfileLayout = ({ children }) => {
 
     const logout = () => {
         removeDataFromLocal('session-cosmetic-token');
+        document.cookie = "consumerId" + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
         router.push('/')
     }
 
@@ -30,11 +31,11 @@ const ProfileLayout = ({ children }) => {
                                 <a className={classnames['profile-layout__nav-link']}>Адреса</a>
                             </ActiveLink>
                         </li>
-                        <li className={classnames['profile-layout__link']}>
+                        {/* <li className={classnames['profile-layout__link']}>
                             <ActiveLink activeClassName={classnames['profile-layout__active']} href='/profile'>
                                 <a className={classnames['profile-layout__nav-link']}>Профиль</a>
                             </ActiveLink>
-                        </li>
+                        </li> */}
                         <li className={classnames['profile-layout__link']}>
                             <button className={classnames['profile-layout__exit']} onClick={logout}>Выйти</button>
                         </li>

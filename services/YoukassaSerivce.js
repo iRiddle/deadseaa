@@ -19,14 +19,17 @@ export const YouKassaApi = async (data = {}, router, setIsLoading, createNotific
         }
 
         if (res.status >= 400 && res.status < 500) {
+            setIsLoading(false)
             return createNotification('error', 'Ошибка доступа. Попробуйте позднее', 'Ошибка')
         }
 
         if (res.status >= 500) {
+            setIsLoading(false)
             return createNotification('error', 'Внутренняя ошибка сервиса оплаты. Попробуйте позднее', 'Ошибка')
         }
 
     } catch (e) {
+        setIsLoading(false)
         return createNotification('error', 'Внутренняя ошибка сервиса оплаты. Попробуйте позднее', 'Ошибка')
     }
 }
