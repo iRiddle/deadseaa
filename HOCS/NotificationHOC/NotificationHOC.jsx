@@ -13,17 +13,15 @@ const withNotification = (WrappedComponent) => {
                 case "info":
                     return NotificationManager.info("Info message");
                 case "ok":
-                    return NotificationManager.success(message);
+                    return NotificationManager.success(message, 'Успешно', 2000);
                 case "warning":
-                    NotificationManager.warning(
+                    return NotificationManager.warning(
                         "Warning message",
                         "Close after 3000ms",
-                        4000
+                        2000
                     );
-                    break;
                 case "error":
-                    NotificationManager.error(message, `${extraMessage}`, 4000);
-                    break;
+                    return NotificationManager.error(message, `${extraMessage}`, 2000);
             }
         };
 

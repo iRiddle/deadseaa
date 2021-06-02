@@ -107,8 +107,9 @@
     }
 
     &__phone {
-        // display: block;
-        // margin-top: 64px;
+        @media (max-width: 424px) {
+            font-size: 12px;
+        }
     }
 
     &__info {
@@ -116,6 +117,12 @@
 
         &--bold {
             font-weight: bold;
+        }
+    }
+
+    &__email {
+        @media (max-width: 424px) {
+            font-size: 12px;
         }
     }
 }

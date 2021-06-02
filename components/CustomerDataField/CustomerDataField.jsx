@@ -5,50 +5,37 @@ import OrderDataTable from '../OrderDataTable';
 import classnames from './CustomerDataField.module.scss'
 
 const CustomerDataField = ({
-    fullName,
-    locality,
-    city,
-    postCode,
-    state,
-    phone,
-    email,
-    notes,
     orders,
+    totalDelivery,
     isLoading,
-    someEmpty,
-    handleData,
-    checkout
-}) => {
-    return (
-        <div className={classnames['checkout']}>
+    register,
+    errors,
+    handleSubmit,
+    onSubmit
+}) => (
+        <form onSubmit={handleSubmit(onSubmit)} className={classnames['checkout']}>
             <div className={classnames['checkout__customer-data']}>
                 <h1 className={classnames['checkout__header']}>
                     Оформление заказа
                 </h1>
-                <form className={classnames['checkout__form']}>
+                <div className={classnames['checkout__form']}>
                     <h2 className={classnames['checkout__span']}>
-                        1. Выберите тип оплаты:
+                        Тип оплаты:
                     </h2>
                     <div className={classnames['checkout__radios']}>
                         <div className={classnames['checkout__radio-container']}>
-                            <input className={classnames['checkout__radio']} type="radio" name="payment" id="onDelivery" checked readOnly />
-                            <label className={classnames['checkout__label']} htmlFor="onDelivery">
-                                Оплата при доставке
-                            </label>
-                        </div>
-                        {/* <div className={classnames['checkout__radio-container']}>
-                            <input type="radio" name="payment" id="onAccount" disabled className={classnames['checkout__radio']} />
-                            <label htmlFor="onAccount" className={classnames['checkout__label']}>
-                                Оплата по счету
-                            </label>
-                        </div>
-                        <div className={classnames['checkout__radio-container']}>
-                            <input type="radio" name="payment" id="onCard" disabled
-                                className={classnames['checkout__radio']} />
+                            <input
+                                type="radio"
+                                name='payment'
+                                className={classnames['checkout__radio']}
+                                placeholder="Введите полное имя"
+                                checked
+                                {...register('payment')}
+                            />
                             <label htmlFor="onCard" className={classnames['checkout__label']}>
                                 Оплата картой
                             </label>
-                        </div> */}
+                        </div>
                     </div>
                     <h2 className={classnames['checkout__span']}>
                         2. Введите контактные данные
@@ -57,101 +44,112 @@ const CustomerDataField = ({
                         Ваше ФИО
                         <input
                             type="text"
+                            name='fullName'
                             className={classnames['checkout__input']}
-                            value={fullName}
-                            onChange={(e) => handleData(e, 'fullName')}
                             placeholder="Введите полное имя"
+                            {...register('fullName')}
                         />
                     </label>
+                    {errors.fullName && <p className={classnames['checkout__error']}>{errors.fullName.message}</p>}
                     <label className={classnames['checkout__field']}>
                         Адрес
                         <input
                             type="text"
+                            name='locality'
                             className={classnames['checkout__input']}
-                            value={locality}
-                            onChange={(e) => handleData(e, 'locality')}
                             placeholder="Введите населенный пункт"
+                            {...register('locality')}
                         />
                     </label>
+                    {errors.locality && <p className={classnames['checkout__error']}>{errors.locality.message}</p>}
                     <label className={classnames['checkout__field']}>
                         Город
                         <input
                             type="text"
+                            name='city'
                             className={classnames['checkout__input']}
-                            value={city}
-                            onChange={(e) => handleData(e, 'city')}
                             placeholder="Введите город"
+                            {...register('city')}
                         />
                     </label>
+                    {errors.city && <p className={classnames['checkout__error']}>{errors.city.message}</p>}
                     <label className={classnames['checkout__field']}>
                         Субъект
                         <input
                             type="text"
+                            name='state'
                             className={classnames['checkout__input']}
-                            value={state}
-                            onChange={(e) => handleData(e, 'state')}
                             placeholder="Введите субъект федерации"
+                            {...register('state')}
                         />
                     </label>
+                    {errors.state && <p className={classnames['checkout__error']}>{errors.state.message}</p>}
                     <label className={classnames['checkout__field']}>
                         Почтовый индекс
                         <input
                             type="text"
+                            name='postCode'
                             className={classnames['checkout__input']}
-                            value={postCode}
-                            onChange={(e) => handleData(e, 'postCode')}
                             placeholder="Введите почтовый индекс"
+                            {...register('postCode', { required: true, maxLength: 6, maxLength: 6 })}
                         />
                     </label>
+                    {errors.postCode && <p className={classnames['checkout__error']}>{errors.postCode.message}</p>}
                     <label className={classnames['checkout__field']}>
                         Контактный телефон
                         <input
                             type="tel"
+                            name='phone'
                             className={classnames['checkout__input']}
-                            value={phone}
-                            onChange={(e) => handleData(e, 'phone')}
                             placeholder="Введите телефон"
+                            {...register('phone')}
                         />
                     </label>
+                    {errors.phone && <p className={classnames['checkout__error']}>{errors.phone.message}</p>}
                     <label className={classnames['checkout__field']}>
                         Контактный email
                         <input
                             type="email"
+                            name='email'
                             className={classnames['checkout__input']}
-                            value={email}
-                            onChange={(e) => handleData(e, 'email')}
-                            placeholder="Введтие email"
+                            placeholder="Введите email"
+                            {...register('email')}
                         />
                     </label>
+                    {errors.email && <p className={classnames['checkout__error']}>{errors.email.message}</p>}
                     <label className={classnames['checkout__field']}>
                         Примечания к заказу
-                        <textarea
+                        <input
+                            type='textarea'
+                            name='notes'
                             className={classnames['checkout__input']}
-                            value={notes}
-                            onChange={(e) => handleData(e, 'notes')}
-                            placeholder="Введите примечания">
-                        </textarea>
+                            placeholder="Введите примечания"
+                            {...register('notes')}
+                        />
                     </label>
-                </form>
+                    {errors.notes && <p className={classnames['checkout__error']}>{errors.notes.message}</p>}
+                </div>
             </div>
-            <OrderDataTable orders={orders} />
+            <OrderDataTable orders={orders} totalDelivery={totalDelivery} />
             <div className={classnames['checkout__container']}>
-                <Button type="submit" type='submit' onClick={checkout} text="Оформить заказ"
-                    isLoading={isLoading} className={classnames['checkout__submit']} disabled={someEmpty} />
+                <Button
+                    type="submit"
+                    text="Оформить заказ"
+                    isLoading={isLoading}
+                    className={classnames['checkout__submit']}
+                    disabled={totalDelivery === 0 || totalDelivery === undefined || totalDelivery === null}
+                />
                 <p className={classnames['checkout__agreement']}>
                     Нажимая кнопку “Оформить
                     заказ” вы даете согласие на использование ваших персональных данных для обработки
                     ваших заказов, упрощения вашей работы с сайтом и для других целей, описанных
                     в нашей
-                <Link href="/privacy-policy">
-                        <a className={classnames['checkout__link']}>
-                            политике конфиденциальности
-                        </a>
+                    <Link href="/privacy-policy">
+                        <a className={classnames['checkout__link']}>политике конфиденциальности</a>
                     </Link>
                 </p>
             </div>
-        </div>
+        </form>
     )
-}
 
 export default CustomerDataField;

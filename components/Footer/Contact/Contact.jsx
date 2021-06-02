@@ -63,7 +63,7 @@ const Contact = () => (
         </div>
         <div className={cn(classnames['footer__info'], classnames['footer__info--bold'])}>
             <Link href="mailto:philosophysea@mail.ru">
-                <a className={classnames['footer__phone']}>
+                <a className={classnames['footer__email']}>
                     philosophysea@mail.ru
             </a>
             </Link>

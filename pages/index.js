@@ -11,7 +11,7 @@ import PageLayout from '../layouts/PageLayout'
 import Contact from '../components/Contact'
 import Offers from '../components/Offers'
 import { apiEmailConfig } from '../config'
-import isValidEmail from '../helpers/validateEmail'
+import { isValidEmail } from '../helpers/validation'
 import fabricStorage from '../helpers/fabricStorage'
 
 import { init } from 'emailjs-com';

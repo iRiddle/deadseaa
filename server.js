@@ -28,65 +28,65 @@ app.prepare().then(() => {
     server.use(bodyParser.json())
     server.use(bodyParser.urlencoded({ extended: true }))
 
-    server.get('/', (req, res) => {
-        return app.render(req, res, '/', req.query)
-    })
+    // server.get('/', (req, res) => {
+    //     return app.render(req, res, '/', req.query)
+    // })
 
-    server.get('/getProducts', async (req, res) => {
-        try {
-            const data = await api.get('products').then(response => response.data).catch(err => err)
-            res.json(data)
-        } catch (e) {
-            throw e
-        }
-    })
+    // server.get('/getProducts', async (req, res) => {
+    //     try {
+    //         const data = await api.get('products').then(response => response.data).catch(err => err)
+    //         res.json(data)
+    //     } catch (e) {
+    //         throw e
+    //     }
+    // })
 
-    server.get('/getCategories', async (req, res) => {
-        try {
-            const data = await api.get(`products/categories`).then(response => response.data).catch(err => err)
-            res.json(data)
-        } catch (e) {
-            throw e
-        }
-    })
+    // server.get('/getCategories', async (req, res) => {
+    //     try {
+    //         const data = await api.get(`products/categories`).then(response => response.data).catch(err => err)
+    //         res.json(data)
+    //     } catch (e) {
+    //         throw e
+    //     }
+    // })
 
-    server.get('/getProductsByCategory/:id', async (req, res) => {
-        try {
-            const categoryId = req.params.id
-            const data = await api.get(`products`, { category: categoryId }).then(response => response.data).catch(err => err)
-            res.json(data)
-        } catch (e) {
-            throw e
-        }
-    })
+    // server.get('/getProductsByCategory/:id', async (req, res) => {
+    //     try {
+    //         const categoryId = req.params.id
+    //         const data = await api.get(`products`, { category: categoryId }).then(response => response.data).catch(err => err)
+    //         res.json(data)
+    //     } catch (e) {
+    //         throw e
+    //     }
+    // })
 
-    server.get('/getProducts/:id', async (req, res) => {
-        try {
-            const productId = req.params.id
-            const data = await api.get(`products/${productId}`).then(response => response.data).catch(err => err)
-            res.json(data)
-        } catch (e) {
-            throw e
-        }
-    })
+    // server.get('/getProducts/:id', async (req, res) => {
+    //     try {
+    //         const productId = req.params.id
+    //         const data = await api.get(`products/${productId}`).then(response => response.data).catch(err => err)
+    //         res.json(data)
+    //     } catch (e) {
+    //         throw e
+    //     }
+    // })
 
-    server.post('/registerUser', async (req, res) => {
-        try {
-            const body = req.body
-            const response = await fetch('https://kosmetika.sandev.online/wp-json/wp/v2/users/register',
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(body)
-                }).then(response => response).catch(err => err);
-            const data = await response.json()
-            res.json(data)
-        } catch (e) {
-            throw e
-        }
-    })
+    // server.post('/registerUser', async (req, res) => {
+    //     try {
+    //         const body = req.body
+    //         const response = await fetch('https://kosmetika.sandev.online/wp-json/wp/v2/users/register',
+    //             {
+    //                 method: 'POST',
+    //                 headers: {
+    //                     'Content-Type': 'application/json'
+    //                 },
+    //                 body: JSON.stringify(body)
+    //             }).then(response => response).catch(err => err);
+    //         const data = await response.json()
+    //         res.json(data)
+    //     } catch (e) {
+    //         throw e
+    //     }
+    // })
 
     server.all('*', (req, res) => {
         return handle(req, res)

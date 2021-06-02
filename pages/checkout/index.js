@@ -1,32 +1,54 @@
-import { useState, useEffect } from 'react'
-import isEmpty from 'lodash.isempty'
+import { useState, useEffect } from 'react';
+import { useForm } from "react-hook-form";
+import { useRouter } from 'next/router';
+import * as yup from "yup";
+import { yupResolver } from '@hookform/resolvers/yup';
 
-import NotificationHOC from '../../HOCS/NotificationHOC'
-import MainLayout from '../../layouts/MainLayout'
-import CustomerDataField from '../../components/CustomerDataField'
+import isEmpty from 'lodash.isempty';
 
-import WooCommerceApi from '../../services/WooCommerceService'
+import NotificationHOC from '../../HOCS/NotificationHOC';
+import MainLayout from '../../layouts/MainLayout';
+import CustomerDataField from '../../components/CustomerDataField';
 
-import { getDataFromLocal, removeDataFromLocal } from '../../storage'
+import WooCommerceApi from '../../services/WooCommerceService';
+import YouKassaService from '../../services/YoukassaSerivce';
+import SdekService from '../../services/SdekService'
 
-import classnames from './Checkout.module.scss'
-import { useRouter } from 'next/router'
+import { getDataFromLocal, removeDataFromLocal } from '../../storage';
+import { phoneRegExp, emailRegExp } from '../../helpers/validation';
+
+import classnames from './Checkout.module.scss';
+
+const CheckoutSchema = yup.object().shape({
+	payment: yup.string().required(''),
+	fullName: yup.string().required('Поле обязательно для заполнения'),
+	locality: yup.string().required('Поле обязательно для заполнения'),
+	city: yup.string().required('Поле обязательно для заполнения'),
+	postCode: yup.number()
+		.required('Поле обязательно для заполнения')
+		.typeError('Почтовый индекс должен быть числом')
+		.integer('Почтовый индекс должен быть числом')
+		.positive()
+		.test('len', 'Почтовый индекс состоит из 6 цифр', val => val.toString().length === 6),
+	state: yup.string().required('Поле обязательно для заполнения'),
+	phone: yup.string()
+		.required('Поле обязательно для заполнения')
+		.matches(phoneRegExp, 'Номер телефона невалидный'),
+	email: yup.string()
+		.required('Поле обязательно для заполнения')
+		.matches(emailRegExp, 'E-mail невалидный'),
+	notes: yup.mixed().notRequired()
+});
 
 const Checkout = ({ createNotification }) => {
-	const [fullName, setFullName] = useState('');
+	const [isLoading, setIsLoading] = useState(false);
+	const [totalDelivery, setTotalDelivery] = useState(0)
 
-	const [locality, setLocality] = useState('');
-	const [city, setCity] = useState('');
-	const [postCode, setPostCode] = useState('');
-	const [state, setState] = useState('');
-
-	const [phone, setPhone] = useState('');
-	const [email, setEmail] = useState('');
-	const [notes, setNotes] = useState('');
-
-	const [isLoading, setIsLoading] = useState(false)
-
-	const router = useRouter()
+	const router = useRouter();
+	const { register, formState: { errors }, watch, handleSubmit } = useForm({
+		resolver: yupResolver(CheckoutSchema)
+	});
+	const watchPostCode = watch("postCode", '');
 
 	const orders = getDataFromLocal('phylosophyProducts');
 
@@ -36,37 +58,19 @@ const Checkout = ({ createNotification }) => {
 		}
 	}, [])
 
-	const handleData = (e, field) => {
-		const value = e.target.value
-		switch (field) {
-			case 'fullName': {
-				return setFullName(value)
-			}
-			case 'locality': {
-				return setLocality(value)
-			}
-			case 'city': {
-				return setCity(value)
-			}
-			case 'postCode': {
-				return setPostCode(value)
-			}
-			case 'state': {
-				return setState(value)
-			}
-			case 'phone': {
-				return setPhone(value)
-			}
-			case 'email': {
-				return setEmail(value)
-			}
-			case 'notes': {
-				return setNotes(value)
-			}
-		}
+	useEffect(async () => {
+		if (watchPostCode && watchPostCode.length === 6) {
+			const parsedTotalDeliver = await SdekService({ postal_code: watchPostCode }, createNotification);
+			return handleTotalDeliver(parsedTotalDeliver);
+		} return handleTotalDeliver(0)
+	}, [watchPostCode])
+
+	const handleTotalDeliver = (data) => {
+		setTotalDelivery(data)
 	}
 
-	const checkout = () => {
+	const onSubmit = (data) => {
+		const { city, email, fullName, locality, phone, postCode, state } = data
 		setIsLoading(true)
 		const isEmptySomeFiled = [fullName, locality, phone, email].some(field => !field.length);
 		if (isEmptySomeFiled) {
@@ -74,10 +78,10 @@ const Checkout = ({ createNotification }) => {
 			return createNotification('error', "Одно из обязательных полей не заполнено", "Ошибка")
 		}
 
-		const data = {
-			payment_method: "cod",
-			payment_method_title: "Оплата при доставке",
-			status: "processing",
+		const approvedData = {
+			payment_method: 'yookassa_epl',
+			payment_method_title: "yookassa_epl",
+			status: "on-hold",
 			set_paid: false,
 			billing: {
 				first_name: fullName,
@@ -88,19 +92,25 @@ const Checkout = ({ createNotification }) => {
 				address_1: locality,
 				city,
 				state,
-				postcode: postCode,
+				postcode: postCode.toString(),
 				country: "RU"
 			},
+			shipping_lines: [
+				{
+					method_id: "flat_rate",
+					method_title: "Flat Rate",
+					total: totalDelivery.toString()
+				}
+			],
 			line_items: [...orders.map(order => ({ product_id: order.id, quantity: order.count }))]
 		};
 
-		WooCommerceApi.post('orders', data).then(response => {
+		WooCommerceApi.post('orders', approvedData).then(response => {
 			if (response.status >= 200 && response.status < 300) {
-				resetState();
 				removeDataFromLocal('phylosophyProducts');
-				setIsLoading(false)
-				setTimeout(() => router.push('/catalog'), 500)
-				return createNotification('ok', 'Заказ успешно оформлен. Счет на оплату направлен на почту!')
+				const orderKey = response.data.order_key
+				const orderId = response.data.id
+				return interceptMethodForYoukassa(orderKey, orderId);
 			}
 
 			if (response.status >= 400 && response.status < 500) {
@@ -108,8 +118,12 @@ const Checkout = ({ createNotification }) => {
 				return createNotification('error', response.data.status, 'Ошибка')
 			}
 
+			if (response.status >= 500) {
+				return createNotification('error', 'Внутренняя ошибка сервиса. Попробуйте позднее', 'Ошибка')
+			}
+
 		}).catch(error => {
-			if (isEmpty(error.response.data)) {
+			if (isEmpty(error.response)) {
 				setIsLoading(false)
 				return createNotification('error', "Сервер не отвечает. Попробуйте позднее.", 'Ошибка')
 			}
@@ -119,33 +133,20 @@ const Checkout = ({ createNotification }) => {
 		})
 	}
 
-	const resetState = () => {
-		setFullName('')
-		setLocality('')
-		setCity('')
-		setPostCode('')
-		setState('')
-		setPhone('')
-		setEmail('')
-		setNotes('')
+	const interceptMethodForYoukassa = (orderKey, id) => {
+		return YouKassaService({ id, order_key: orderKey }, router, setIsLoading, createNotification)
 	}
 
 	return (
 		<MainLayout className={classnames['main--checkout']}>
 			<CustomerDataField
-				fullName={fullName}
-				locality={locality}
-				city={city}
-				postCode={postCode}
-				state={state}
-				phone={phone}
-				email={email}
-				notes={notes}
 				orders={orders}
+				totalDelivery={totalDelivery}
 				isLoading={isLoading}
-				handleData={handleData}
-				checkout={checkout}
-				someEmpty={!isEmpty(orders) && orders.some(item => isEmpty(item.price) || item.price === 0)}
+				register={register}
+				handleSubmit={handleSubmit}
+				errors={errors}
+				onSubmit={onSubmit}
 			/>
 		</MainLayout>
 	)

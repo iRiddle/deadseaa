@@ -55,10 +55,7 @@
     }
 
     &__td {
-        padding-left: 25px;
-        height: 54px;
-        font-style: normal;
-        font-weight: normal;
+        padding: 12px;
         font-size: 12px;
         display: flex;
         align-items: center;
@@ -71,11 +68,9 @@
     }
 
     &__subtotal-str {
-        padding-left: 25px;
-        font-style: normal;
+        padding: 12px;
         font-weight: bold;
         font-size: 15px;
-        height: 54px;
     }
 
     &__price {

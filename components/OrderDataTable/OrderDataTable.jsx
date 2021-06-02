@@ -4,7 +4,7 @@ import isEmpty from 'lodash.isempty'
 
 import classnames from './OrderDataTable.module.scss'
 
-const OrderDataTable = ({ orders }) => {
+const OrderDataTable = ({ orders, totalDelivery }) => {
     const totalPrice = !isEmpty(orders) && orders.reduce((accumulator, currentValue) => {
         return accumulator + (Number(currentValue.price) * currentValue.count)
     }, 0)
@@ -21,7 +21,6 @@ const OrderDataTable = ({ orders }) => {
     })
 
     const ordersLength = !isEmpty(orders) && orders.length
-
     return (
         <div className={classnames['order']}>
             <h1 className={classnames['order__header']}>Ваш заказ</h1>
@@ -38,6 +37,12 @@ const OrderDataTable = ({ orders }) => {
                             <td className={classnames['order__subtotal-str']}>Подытог:</td>
                             <td className={classnames['order__price']}>{`${totalPrice} руб.`}</td>
                         </tr>
+                        {totalDelivery !== 0 && totalDelivery !== undefined && totalDelivery !== null && (
+                            <tr>
+                                <td className={classnames['order__subtotal-str']}>Стоимость доставки:</td>
+                                <td className={classnames['order__price']}>{`${totalDelivery} руб.`}</td>
+                            </tr>
+                        )}
                         <tr className={cn(ordersLength % 2 !== 0 && classnames['order__tr--white'])}>
                             <td className={classnames['order__subtotal-str']}>Итого:</td>
                             <td className={classnames['order__price']}>{`${totalPrice} руб.`}</td>
